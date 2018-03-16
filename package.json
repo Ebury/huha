@@ -1,0 +1,62 @@
+{
+  "name": "@ebury/huha",
+  "description": "hu-ha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
+  "version": "1.0.0",
+  "repository": "github:Ebury/huha",
+  "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "quotes": [
+        2,
+        "single"
+      ]
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "babelify": "github:ylemkimon/babelify",
+    "browserify": "^14.5.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-awspublish": "^3.3.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-size": "^2.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.1.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage"
+        }
+      ]
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.42"
+  }
+}
