@@ -29,7 +29,7 @@ gulp.task('lint', () => {
   return l;
 });
 
-gulp.task('build', ['lint'], () => {
+gulp.task('build', () => {
   const b = browserify({
     debug: true,
   });
@@ -49,22 +49,4 @@ gulp.task('clean', del.bind(null, ['dist']));
 
 gulp.task('default', (done) => {
   runSequence('clean', 'build', done);
-});
-
-gulp.task('deploy', ['default'], () => {
-  const publisher = $.awspublish.create({
-    params: {
-      Bucket: process.env.HUHA_S3_BUCKET,
-    },
-    accessKeyId: process.env.HUHA_S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.HUHA_S3_SECRET_ACCESS_KEY,
-  });
-
-  const headers = {
-    'Cache-Control': 'max-age=315360000, no-transform, public',
-  };
-
-  return gulp.src('dist/**/*.*')
-    .pipe(publisher.publish(headers))
-    .pipe($.awspublish.reporter());
 });

@@ -1,4 +1,4 @@
-/* global window, document, ga, Intercom */
+/* global document, ga, Intercom */
 
 const IN_PROGRESS = 'In progress';
 const COMPLETED = 'Completed';
@@ -189,47 +189,44 @@ class Huha {
    */
   setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
-    window.addEventListener('beforeunload', () => {
+    global.addEventListener('beforeunload', () => {
       this.abandonInProgressTasks();
     });
 
     // Listen to events defined directly on the DOM
     const events = ['click', 'focus', 'change'];
     events.forEach((eventName) => {
-      document.querySelector('body').addEventListener(eventName, (evt) => {
+      document.querySelector('[data-huha-task]').addEventListener(eventName, (evt) => {
         this.registerEvent(eventName, evt.target);
       }, true);
     });
   }
 
   /**
-   * Checks if the given element has been initialised directly in the DOM to be considered in a
-   * task. If that is the case and the trigger event defined on it is the same the received
-   * expected event, it will register its action in the task defined on the element
+   * Registers the action of the given element in the task defined on the element
    * @param capturedEvent {string} Name of the event captured. If this event is the same than the
    * one defined on the element, the action will be registered
    * @param element {object} Element that has triggered the captured event
    */
   registerEvent(capturedEvent, element) {
     const { dataset } = element;
-    if ('huhaTask' in dataset) {
-      const taskName = dataset.huhaTask;
-      const actionTrigger = dataset.huhaTrigger;
-      const eventType = dataset.huhaEvent;
-      if (capturedEvent === actionTrigger) {
-        if (eventType === 'start') {
-          this.createTask(taskName);
-        } else {
-          const task = this.getTask(taskName);
-          if (eventType === 'complete') {
-            task.complete();
-          } else if (eventType === 'abandon') {
-            task.abandon();
-          } else if (eventType === 'interaction') {
-            task.addInteraction();
-          } else if (eventType === 'error') {
-            task.addError();
-          }
+    const taskName = dataset.huhaTask;
+    const actionTrigger = dataset.huhaTrigger;
+    const eventType = dataset.huhaEvent;
+
+    if (capturedEvent === actionTrigger) {
+      if (eventType === 'start') {
+        this.createTask(taskName);
+      } else {
+        const task = this.getTask(taskName);
+        if (eventType === 'complete') {
+          task.complete();
+        } else if (eventType === 'abandon') {
+          task.abandon();
+        } else if (eventType === 'interaction') {
+          task.addInteraction();
+        } else if (eventType === 'error') {
+          task.addError();
         }
       }
     }
@@ -244,10 +241,6 @@ class Huha {
   }
 }
 
-const huha = new Huha();
-window.huha = huha;
+global.Huha = Huha;
 
-export default {
-  huha,
-  Huha,
-};
+export default Huha;
