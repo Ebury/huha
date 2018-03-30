@@ -12,7 +12,7 @@ model and the best practices.
 For Adding huha.js to your web application, just include the following script.
 
 ```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/huha.js"></script>
+<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.0.0/huha.js"></script>
 ```
 
 TODO. In the meantime, take a look at the source code as it contains plenty of comments.
