@@ -22,15 +22,16 @@ function lint(files, options) {
 }
 
 gulp.task('lint', () => {
-  return lint('src/**/*.js', {
-    fix: true
+  const l = lint('src/**/*.js', {
+    fix: true,
   })
-  .pipe(gulp.dest('src'));
+    .pipe(gulp.dest('src'));
+  return l;
 });
 
 gulp.task('build', ['lint'], () => {
   const b = browserify({
-    debug: true
+    debug: true,
   });
   b.add('src/huha.js');
   b.transform(babelify);
@@ -39,28 +40,28 @@ gulp.task('build', ['lint'], () => {
     .pipe($.plumber())
     .pipe(buffer())
     .pipe($.uglify())
-    .pipe($.size({title: 'build', gzip: true}))
+    .pipe($.size({ title: 'build', gzip: true }))
     .pipe(gulp.dest(versionedBuildFolder))
     .pipe(gulp.dest(devBuildFolder));
 });
 
 gulp.task('clean', del.bind(null, ['dist']));
 
-gulp.task('default', done => {
+gulp.task('default', (done) => {
   runSequence('clean', 'build', done);
 });
 
 gulp.task('deploy', ['default'], () => {
   const publisher = $.awspublish.create({
-    'params': {
-      'Bucket': process.env.HUHA_S3_BUCKET
+    params: {
+      Bucket: process.env.HUHA_S3_BUCKET,
     },
-    'accessKeyId': process.env.HUHA_S3_ACCESS_KEY_ID,
-    'secretAccessKey': process.env.HUHA_S3_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.HUHA_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.HUHA_S3_SECRET_ACCESS_KEY,
   });
 
   const headers = {
-    'Cache-Control': 'max-age=315360000, no-transform, public'
+    'Cache-Control': 'max-age=315360000, no-transform, public',
   };
 
   return gulp.src('dist/**/*.*')

@@ -1,28 +1,14 @@
 {
   "name": "@ebury/huha",
-  "description": "hu-ha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
+  "description": "huha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
   "version": "1.0.0",
   "repository": "github:Ebury/huha",
   "license": "MIT",
-  "engines": {
-    "node": ">=4"
+  "scripts": {
+    "test": "gulp lint"
   },
   "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
-    },
-    "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
-    },
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module"
-    }
+    "extends": "airbnb-base"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.42",
@@ -30,6 +16,9 @@
     "babelify": "github:ylemkimon/babelify",
     "browserify": "^14.5.0",
     "del": "^3.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
     "gulp-eslint": "^4.0.0",
