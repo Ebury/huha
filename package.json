@@ -5,7 +5,8 @@
   "repository": "github:Ebury/huha",
   "license": "MIT",
   "scripts": {
-    "test": "gulp lint"
+    "test": "gulp lint",
+    "build": "gulp build"
   },
   "eslintConfig": {
     "extends": "airbnb-base"

@@ -3,6 +3,7 @@ node_js:
   - lts/*
 before_script:
   - npm install -g gulp
+script: npm run build
 deploy:
   provider: s3
   access_key_id: AKIAII23WKQCPMDNS5BA
