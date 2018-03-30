@@ -10,6 +10,7 @@ deploy:
   secret_access_key:
     secure: faPLBVKAiTNd0FxUOTK2VFtdkE4QcarxCyTU2l0zuRR8as1fizXsYhWOTr1jSMX9u0cFn5IkhKM/1n1YYwUQhHLjhkACRl+rqUe/9ViQET/RHA7EsbUK/o5yCJLTt20zQCXNWkCOPthfM+MTvpUi7UY6233Agv6nrBiG27A54u09mWhOsf5AgsJ/S0YP2hdBrc0xRjwp+pzbBSYEb17cRIlDxdGzUIq/e4/IrZwEYKBupLSImb/Ip0jln21weS+no6CWPZbdrFbUCaS4+mXhDfzX+yDe8ujVr5dn4O4SuTTlbyAV5+S3D/OYKzMQNsovbQW6J9yP8CH5PMbwbhYB6QPolp2FclWFYbjd/Vuy35oMvj+QNK8+cODLfBVeFVfbVfwQLBZwNaoZ4vmUKjITRz+XeLcrpqjW5elBWj1RyRLwj+AwudGBk8/hNtsVN8OzgMm74bMpxUyJG00kRqf6Q2r2a2Z5zyBbSfL1ScR0AFZA+aUcL1I3gBhxHzFPAYduw/7XpGyTw/YfjpjzU5T8DxNQC/NCVzrCNz+IxVk4z6Wo0rJ/8lS+a+LxEV/eWr/q/txzLnOwa+kWveaKK8AtzZ+Xxhw+uY2bWWyI5dPykfty8DbC/xOAz+/YVA48QgcqmiwmIRGR7MUj05iZ/lIldpgOcSbGmS23IQaXqvVdx6M=
   bucket: ebury-huha
+  skip_cleanup: true
   local-dir: dist
   acl: public_read
   on:
