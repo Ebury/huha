@@ -135,24 +135,24 @@ class HuhaTask {
 class Huha {
   /**
    * Constructor of the Huha class
-   */
-  constructor() {
-    this.tasks = [];
-    this.setUpEvents();
-  }
-
-  /**
-   * Changes the configuration
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task need to be tracked on Google
    *   Analytics
    * - trackOnIntercom (Boolean): Indicates if the task need to be tracked on Intercom
    */
-  configure(options) {
+  constructor(options) {
+    this.tasks = [];
+
+    if (!options) {
+      options = {};
+    }
+
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
+
+    this.setUpEvents();
   }
 
   /**

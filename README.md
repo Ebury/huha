@@ -29,6 +29,7 @@ import Huha from '@ebury/huha'
 
 Method | Description |
 ------------- | ------------- |
+`constructor(options)` | Instantiates a new `Huha` class with the given `options`. The `options` argument is an object containing the configuration of the class. Options available are:<br>- `trackOnGoogleAnalytics` (Boolean): Indicates if the task need to be tracked on Google Analytics<br>- `trackOnIntercom` (Boolean): Indicates if the task need to be tracked on Intercom
 `createTask(name)` | Creates and returns a `HuhaTask` class with the given `name`
 
 ### Example ###
