@@ -1,4 +1,6 @@
-/* global ga, Intercom, window, document */
+/* global ga, Intercom */
+
+const { document } = global;
 
 const IN_PROGRESS = 'In progress';
 const COMPLETED = 'Completed';
@@ -189,16 +191,19 @@ class Huha {
    */
   setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
-    window.addEventListener('beforeunload', () => {
+    global.addEventListener('beforeunload', () => {
       this.abandonInProgressTasks();
     });
 
     // Listen to events defined directly on the DOM
     const events = ['click', 'focus', 'change'];
     events.forEach((eventName) => {
-      document.querySelector('[data-huha-task]').addEventListener(eventName, (evt) => {
-        this.registerEvent(eventName, evt.target);
-      }, true);
+      const tasks = document.querySelector('[data-huha-task]');
+      if (tasks) {
+        tasks.addEventListener(eventName, (evt) => {
+          this.registerEvent(eventName, evt.target);
+        }, true);
+      }
     });
   }
 
