@@ -9,14 +9,36 @@ model and the best practices.
 
 ## Documentation ##
 
-For Adding huha.js to your web application, just include the following script.
+### Installation ###
 
-```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.0.0/huha.js"></script>
+NPM is the recommended installation method
+
+```
+npm install @ebury/huha --save
 ```
 
-TODO. In the meantime, take a look at the source code as it contains plenty of comments.
+Then you can import the `Huha` class in your application
 
+```javascript
+import Huha from '@ebury/huha'
+```
+
+### Reference ###
+
+#### `Huha` class ####
+
+Method | Description |
+------------- | ------------- |
+`createTask(name)` | Creates and returns a `HuhaTask` class with the given `name`
+
+### Example ###
+
+```javascript
+import Huha from '@ebury/huha';
+
+let huha = new Huha();
+let huhaTask = huha.createTask('TaskName');
+```
 
 ## Our story ##
 

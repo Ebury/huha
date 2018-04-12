@@ -1,4 +1,6 @@
-/* global document, ga, Intercom */
+/* global ga, Intercom */
+
+const { document } = global;
 
 const IN_PROGRESS = 'In progress';
 const COMPLETED = 'Completed';
@@ -240,7 +242,5 @@ class Huha {
     pendingTasks.forEach(task => task.abandon());
   }
 }
-
-global.Huha = Huha;
 
 export default Huha;
