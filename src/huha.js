@@ -243,4 +243,4 @@ class Huha {
   }
 }
 
-export default Huha;
+module.exports = Huha;
