@@ -144,11 +144,7 @@ class Huha {
   constructor(options) {
     this.tasks = [];
 
-    if (!options) {
-      options = {};
-    }
-
-    const mergedOptions = Object.assign(DEFAULTS, options);
+    const mergedOptions = Object.assign(DEFAULTS, options || {});
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
 
@@ -224,14 +220,16 @@ class Huha {
         this.createTask(taskName);
       } else {
         const task = this.getTask(taskName);
-        if (eventType === 'complete') {
-          task.complete();
-        } else if (eventType === 'abandon') {
-          task.abandon();
-        } else if (eventType === 'interaction') {
-          task.addInteraction();
-        } else if (eventType === 'error') {
-          task.addError();
+        if (task) {
+          if (eventType === 'complete') {
+            task.complete();
+          } else if (eventType === 'abandon') {
+            task.abandon();
+          } else if (eventType === 'interaction') {
+            task.addInteraction();
+          } else if (eventType === 'error') {
+            task.addError();
+          }
         }
       }
     }
