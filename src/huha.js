@@ -1,6 +1,4 @@
-/* global ga, Intercom */
-
-const { document } = global;
+/* global ga, Intercom, window, document */
 
 const IN_PROGRESS = 'In progress';
 const COMPLETED = 'Completed';
@@ -191,7 +189,7 @@ class Huha {
    */
   setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
-    global.addEventListener('beforeunload', () => {
+    window.addEventListener('beforeunload', () => {
       this.abandonInProgressTasks();
     });
 
