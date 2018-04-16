@@ -211,7 +211,7 @@ class Huha {
     // Listen to events defined directly on the DOM
     const events = ['click', 'focus', 'change'];
     events.forEach((eventName) => {
-      document.querySelector('body').addEventListener('eventName', (evt) => {
+      document.querySelector('body').addEventListener(eventName, (evt) => {
         if ('huhaTask' in evt.target.dataset) {
           this.registerEvent(eventName, evt.target);
         }
