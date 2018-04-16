@@ -1,4 +1,4 @@
-/* global document, ga, Intercom */
+/* global document, ga, gtag, Intercom */
 
 const IN_PROGRESS = 'In progress';
 const COMPLETED = 'Completed';
@@ -108,6 +108,23 @@ class HuhaTask {
       ga('send', 'timing', this.name, this.status, this.time, 'Time on task');
       ga('send', 'event', this.name, this.status, 'Error', this.errors);
       ga('send', 'event', this.name, this.status, 'Effort', this.effort);
+    } else if (typeof gtag !== 'undefined') {
+      gtag('event', 'timing_complete', {
+        event_category: this.name,
+        event_label: this.status,
+        value: this.time,
+        name: 'Time on task',
+      });
+      gtag('event', this.name, {
+        event_category: this.status,
+        event_label: 'Error',
+        value: this.errors,
+      });
+      gtag('event', this.name, {
+        event_category: this.status,
+        event_label: 'Effort',
+        value: this.effort,
+      });
     }
   }
 
@@ -196,8 +213,10 @@ class Huha {
     // Listen to events defined directly on the DOM
     const events = ['click', 'focus', 'change'];
     events.forEach((eventName) => {
-      document.querySelector('[data-huha-task]').addEventListener(eventName, (evt) => {
-        this.registerEvent(eventName, evt.target);
+      document.querySelector('body').addEventListener('eventName', (evt) => {
+        if ('huhaTask' in evt.target.dataset) {
+          this.registerEvent(eventName, evt.target);
+        }
       }, true);
     });
   }
