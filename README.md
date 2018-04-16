@@ -9,14 +9,81 @@ model and the best practices.
 
 ## Documentation ##
 
-For Adding huha.js to your web application, just include the following script.
+### Installation ###
 
-```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.0.0/huha.js"></script>
+NPM is the recommended installation method
+
+```
+npm install github:Ebury/huha --save
 ```
 
-TODO. In the meantime, take a look at the source code as it contains plenty of comments.
+Then you can import the `Huha` class in your application
 
+```javascript
+import Huha from '@ebury/huha'
+```
+
+### Reference ###
+
+#### `Huha` class ####
+
+Method | Description |
+------------- | ------------- |
+`constructor(options)` | Instantiates a new `Huha` class with the given `options`. The `options` argument is an object containing the configuration of the class. Options available are:<br>- `trackOnGoogleAnalytics` (Boolean): Indicates if the task need to be tracked on Google Analytics<br>- `trackOnIntercom` (Boolean): Indicates if the task need to be tracked on Intercom
+`createTask(name)` | Creates and returns a `HuhaTask` class with the given `name`
+`getTask(name)` | Gets an in progress task giving its `name`
+
+#### `HuhaTask` class ####
+
+Method | Description |
+------------- | ------------- |
+`addInteraction()` | Increments the count of effort in 1
+`addError()` | Increments the count of errors in 1
+`complete()` | Marks the task as completed (*)
+`abandon()` | Marks the task as abandoned (*)
+
+(*) When a task is completed or abandoned, is is tracked in Google Analytics or Intercom based on the `Huha` options.
+
+#### Example ####
+
+```javascript
+import Huha from '@ebury/huha';
+
+const huha = new Huha({
+  trackOnGoogleAnalytics: true,
+  trackOnIntercom: false,
+});
+const huhaTask = huha.createTask('TaskName');
+huhaTask.addInteraction();
+huhaTask.addError();
+huhaTask.complete();
+```
+
+### Automatic tasks ###
+It is possible to create tasks and measuring the user activity directly in the DOM without writing Javascript.
+
+Any user activity done in DOM elements having the `data-huha-task` attribute will be monitored using the following
+attributes:
+
+Attribute | Description |
+------------- | ------------- |
+`data-huha-task` | Name of the task that will store the user activity related with the DOM element
+`data-huha-trigger` | Javascript event that is listened to for storing the activity: click, focus or change
+`data-huha-event` | Type of user activity that is stored when the Javascript event is triggered:<br>- start: Beginning of the task<br>- complete: Completion of the task<br>- abandon: Abandonment of the task<br>- interaction: New interaction in the task<br>- error: New error in the task
+
+#### Example ####
+
+```html
+<button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="start">Start task</button>
+<input type="text" data-huha-task="TaskName" data-huha-trigger="focus" data-huha-event="interaction">
+<select data-huha-task="TaskName" data-huha-trigger="change" data-huha-event="interaction">
+  <option>Option 1</option>
+  <option>Option 2</option>
+</select>
+<button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="error">Error</button>
+<button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="abandon">Abandon</button>
+<button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="complete">Complete</button>
+```
 
 ## Our story ##
 
