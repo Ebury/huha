@@ -106,11 +106,7 @@ class HuhaTask {
    * 2 events (for indicating the errors and the effort)
    */
   sendToGoogleAnalytics() {
-    if (typeof ga !== 'undefined') {
-      ga('send', 'timing', this.name, this.status, this.time, 'Time on task');
-      ga('send', 'event', this.name, this.status, 'Error', this.errors);
-      ga('send', 'event', this.name, this.status, 'Effort', this.effort);
-    } else if (typeof gtag !== 'undefined') {
+    if (typeof gtag !== 'undefined') {
       gtag('event', 'timing_complete', {
         event_category: this.name,
         event_label: this.status,
@@ -127,6 +123,10 @@ class HuhaTask {
         event_label: 'Effort',
         value: this.effort,
       });
+    } else if (typeof ga !== 'undefined') {
+      ga('send', 'timing', this.name, this.status, this.time, 'Time on task');
+      ga('send', 'event', this.name, this.status, 'Error', this.errors);
+      ga('send', 'event', this.name, this.status, 'Effort', this.effort);
     }
   }
 
