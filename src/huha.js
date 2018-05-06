@@ -109,17 +109,17 @@ class HuhaTask {
     if (typeof gtag !== 'undefined') {
       gtag('event', 'timing_complete', {
         event_category: this.name,
-        event_label: this.status,
+        event_label: 'Time on task',
         value: this.time,
-        name: 'Time on task',
+        name: this.status,
       });
-      gtag('event', this.name, {
-        event_category: this.status,
+      gtag('event', this.status, {
+        event_category: this.name,
         event_label: 'Error',
         value: this.errors,
       });
-      gtag('event', this.name, {
-        event_category: this.status,
+      gtag('event', this.status, {
+        event_category: this.name,
         event_label: 'Effort',
         value: this.effort,
       });
