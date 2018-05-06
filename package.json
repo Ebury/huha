@@ -6,10 +6,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "gulp lint",
-    "test": "jest",
     "build": "gulp build",
-    "pretest": "npm run lint",
-    "prebuild": "npm run test"
+    "prebuild": "npm run lint"
   },
   "eslintConfig": {
     "extends": "airbnb-base"
