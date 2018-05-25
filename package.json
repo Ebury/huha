@@ -52,5 +52,5 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.42"
   },
-  "main": "src/huha.js"
+  "main": "dist/huha.js"
 }
