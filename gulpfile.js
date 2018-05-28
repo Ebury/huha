@@ -2,17 +2,14 @@ const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const del = require('del');
 const runSequence = require('run-sequence');
-const browserify = require('browserify');
-const babelify = require('babelify');
-const buffer = require('vinyl-buffer');
-const source = require('vinyl-source-stream');
 const packageJson = require('./package.json');
 
 const $ = gulpLoadPlugins();
 
 const VERSION = packageJson.version;
-const versionedBuildFolder = `dist/${VERSION}`;
-const devBuildFolder = 'dist/dev';
+const buildFolder = 'dist';
+const versionedBuildFolder = `${buildFolder}/${VERSION}`;
+const devBuildFolder = `${buildFolder}/dev`;
 
 function lint(files, options) {
   return gulp.src(files)
@@ -30,17 +27,14 @@ gulp.task('lint', () => {
 });
 
 gulp.task('build', () => {
-  const b = browserify({
-    debug: true,
-  });
-  b.add('src/huha.js');
-  b.transform(babelify);
-  return b.bundle()
-    .pipe(source('huha.js'))
+  return gulp.src('src/huha.js')
     .pipe($.plumber())
-    .pipe(buffer())
+    .pipe($.sourcemaps.init())
+    .pipe($.babel())
     .pipe($.uglify())
+    .pipe($.sourcemaps.write('.'))
     .pipe($.size({ title: 'build', gzip: true }))
+    .pipe(gulp.dest(buildFolder))
     .pipe(gulp.dest(versionedBuildFolder))
     .pipe(gulp.dest(devBuildFolder));
 });
