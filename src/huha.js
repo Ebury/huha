@@ -183,8 +183,10 @@ class HuhaEvent {
    * Constructor of the HuhaEvent
    * @param name {string} Name of the event
    * @param object {string} Name of the object that is being manipulated during the event
-   * @param action {string} Name of the action that is being executed in the object during the event
-   * @param section {string} Name of the the section og this event, so it can be grouped as categories
+   * @param action {string} Name of the action that is being executed in the object during the
+   * event
+   * @param section {string} Name of the the section og this event, so it can be grouped as
+   * categories
    * @param value {string} Value of the action done to the object
    * @param task {string|HuhaTask} Task associated to the event
    * @param eventGroup {string} Identifier of the group this event is linked to
@@ -275,7 +277,7 @@ class Huha {
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
     this.trackOnSegment = mergedOptions.trackOnSegment;
 
-    this._setUpEvents();
+    this.setUpEvents();
   }
 
   /**
@@ -337,10 +339,10 @@ class Huha {
   /**
    * Adds all the event listeners needed
    */
-  _setUpEvents() {
+  setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
     global.addEventListener('beforeunload', () => {
-      this._abandonInProgressTasks();
+      this.abandonInProgressTasks();
     });
 
     // Listen to events defined directly on the DOM
@@ -348,7 +350,7 @@ class Huha {
     events.forEach((eventName) => {
       document.querySelector('body').addEventListener(eventName, (evt) => {
         if ('huhaTask' in evt.target.dataset) {
-          this._registerEvent(eventName, evt.target);
+          this.registerEvent(eventName, evt.target);
         }
       }, true);
     });
@@ -360,7 +362,7 @@ class Huha {
    * one defined on the element, the action will be registered
    * @param element {object} Element that has triggered the captured event
    */
-  _registerEvent(capturedEvent, element) {
+  registerEvent(capturedEvent, element) {
     const { dataset } = element;
     const taskName = dataset.huhaTask;
     const actionTrigger = dataset.huhaTrigger;
@@ -389,7 +391,7 @@ class Huha {
   /**
    * Abandons all the tasks that are in progress
    */
-  _abandonInProgressTasks() {
+  abandonInProgressTasks() {
     const pendingTasks = this.tasks.filter(task => task.status === IN_PROGRESS);
     pendingTasks.forEach(task => task.abandon());
   }
