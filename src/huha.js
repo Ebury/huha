@@ -1,5 +1,7 @@
 /* global ga, Intercom, gtag, analytics */
 
+import uuidv1 from 'uuid/v1';
+
 const { document } = global;
 
 const IN_PROGRESS = 'In progress';
@@ -184,6 +186,7 @@ class HuhaEvent {
    * @param action {string} Name of the action that is being executed in the object during the event
    * @param section {string} Name of the the section og this event, so it can be grouped as categories
    * @param value {string} Value of the action done to the object
+   * @param eventGroup {string} Identifier of the group this event is linked to
    * @param task {string|HuhaTask} Task associated to the event
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
@@ -191,7 +194,7 @@ class HuhaEvent {
    *   Analytics
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, object, action, section, value, task, options) {
+  constructor(name, object, action, section, value, task, eventGroup, options) {
     const mergedOptions = Object.assign(DEFAULTS, options || {});
 
     this.name = name;
@@ -200,6 +203,7 @@ class HuhaEvent {
     this.section = section;
     this.value = value;
     this.task = task;
+    this.eventGroup = eventGroup || uuidv1();
 
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnSegment = mergedOptions.trackOnSegment;
@@ -243,6 +247,7 @@ class HuhaEvent {
         label: this.object,
         action: this.action,
         value: this.value,
+        eventGroup: this.eventGroup,
       });
     }
   }
@@ -303,11 +308,12 @@ class Huha {
    * @param action {string} Name of the action that is being executed in the object during the event
    * @param section {string} Name of the the section og this event, so it can be grouped as categories
    * @param value {string} Value of the action done to the object
+   * @param eventGroup {string} Identifier of the group this event is linked to
    * @param task {string|HuhaTask} Task associated to the event
    * @returns {HuhaEvent}
    */
-  createEvent(name, object, action, section, value, task) {
-    const huhaEvent = new HuhaEvent(name, object, action, section, value, task, {
+  createEvent(name, object, action, section, value, eventGroup, task) {
+    const huhaEvent = new HuhaEvent(name, object, action, section, value, eventGroup, task, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnSegment: this.trackOnSegment,
     });

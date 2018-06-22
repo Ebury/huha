@@ -50,7 +50,8 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.42"
+    "@babel/polyfill": "^7.0.0-beta.42",
+    "uuid": "^3.2.1"
   },
   "main": "dist/huha.js"
 }
