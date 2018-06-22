@@ -11,6 +11,8 @@ model and the best practices.
 
 ### Installation ###
 
+#### NPM ####
+
 NPM is the recommended installation method
 
 ```
@@ -23,15 +25,26 @@ Then you can import the `Huha` class in your application
 import Huha from '@ebury/huha'
 ```
 
+#### CDN ####
+
+Alternatively, you can load the script directly from our cdn
+
+```html
+<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.1.0/huha.js"></script>
+```
+
 ### Reference ###
 
 #### `Huha` class ####
 
 Method | Description |
 ------------- | ------------- |
-`constructor(options)` | Instantiates a new `Huha` class with the given `options`. The `options` argument is an object containing the configuration of the class. Options available are:<br>- `trackOnGoogleAnalytics` (Boolean): Indicates if the task need to be tracked on Google Analytics<br>- `trackOnIntercom` (Boolean): Indicates if the task need to be tracked on Intercom
+`constructor(options)` | Instantiates a new `Huha` class with the given `options`. The `options` argument is an object containing the configuration of the class. Options available are:<br>- `trackOnGoogleAnalytics` (Boolean): Indicates if the task need to be tracked on Google Analytics<br>- `trackOnIntercom` (Boolean): Indicates if the task need to be tracked on Intercom<br>- `trackOnSegmenet` (Boolean): Indicates if the task need to be tracked on Segment
 `createTask(name)` | Creates and returns a `HuhaTask` class with the given `name`
 `getTask(name)` | Gets an in progress task giving its `name`
+`createEvent(name, object, action, section, value, task)` | Creates, tracks (*) and returns a `HuhaEvent` class with the given `name`. The other params are used for providing extra context:<br>- `object`: Name of the object that is being manipulated during the event<br>- `action`: Name of the action that is being executed in the object during the event<br>- `section`: Name of the the section og this event, so it can be grouped as categories<br>- `value`: Value of the action done to the object<br>- `task`: Task associated to the event
+
+(*) The event is tracked in Google Analytics or Segment based on the `Huha` options.
 
 #### `HuhaTask` class ####
 
@@ -42,7 +55,7 @@ Method | Description |
 `complete()` | Marks the task as completed (*)
 `abandon()` | Marks the task as abandoned (*)
 
-(*) When a task is completed or abandoned, is is tracked in Google Analytics or Intercom based on the `Huha` options.
+(*) When a task is completed or abandoned, is is tracked in Google Analytics, Intercom or Segment based on the `Huha` options.
 
 #### Example ####
 
@@ -50,8 +63,9 @@ Method | Description |
 import Huha from '@ebury/huha';
 
 const huha = new Huha({
-  trackOnGoogleAnalytics: true,
+  trackOnGoogleAnalytics: false,
   trackOnIntercom: false,
+  trackOSegmenet: true,
 });
 const huhaTask = huha.createTask('TaskName');
 huhaTask.addInteraction();

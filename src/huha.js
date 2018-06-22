@@ -1,4 +1,4 @@
-/* global ga, Intercom, gtag */
+/* global ga, Intercom, gtag, analytics */
 
 const { document } = global;
 
@@ -7,8 +7,9 @@ const COMPLETED = 'Completed';
 const ABANDONED = 'Abandoned';
 
 const DEFAULTS = {
-  trackOnGoogleAnalytics: true,
+  trackOnGoogleAnalytics: false,
   trackOnIntercom: false,
+  trackOnSegment: true,
 };
 
 /**
@@ -20,9 +21,10 @@ class HuhaTask {
    * @param name {string} Name of the task
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
-   * - trackOnGoogleAnalytics (Boolean): Indicates if the task need to be tracked on Google
+   * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
    *   Analytics
-   * - trackOnIntercom (Boolean): Indicates if the task need to be tracked on Intercom
+   * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
+   * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
   constructor(name, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
@@ -34,6 +36,7 @@ class HuhaTask {
     this.end = null;
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
+    this.trackOnSegment = mergedOptions.trackOnSegment;
   }
 
   /**
@@ -77,7 +80,7 @@ class HuhaTask {
   }
 
   /**
-   * Tracks the task in external services like Google Analytics or Intercom
+   * Tracks the task in external services like Google Analytics, Intercom or Segment
    */
   track() {
     if (this.trackOnGoogleAnalytics) {
@@ -86,6 +89,10 @@ class HuhaTask {
 
     if (this.trackOnIntercom) {
       this.sendToIntercom();
+    }
+
+    if (this.trackOnSegment) {
+      this.sendToSegment();
     }
   }
 
@@ -144,6 +151,101 @@ class HuhaTask {
       });
     }
   }
+
+  /**
+   * Tracks the task using a single Event in Segment. The elapsed time, the errors, the effort,
+   * the result and when the task was started are included as properties
+   */
+  sendToSegment() {
+    if (typeof analytics !== 'undefined') {
+      analytics.track(this.name, {
+        category: this.name,
+        action: this.status,
+        label: 'Task',
+        value: 1,
+        errors: this.errors,
+        effort: this.effort,
+        time: this.time,
+        result: this.status,
+        started: this.start,
+      });
+    }
+  }
+}
+
+/**
+ * Class that will store an individual event to be tracked
+ */
+class HuhaEvent {
+  /**
+   * Constructor of the HuhaEvent
+   * @param name {string} Name of the event
+   * @param object {string} Name of the object that is being manipulated during the event
+   * @param action {string} Name of the action that is being executed in the object during the event
+   * @param section {string} Name of the the section og this event, so it can be grouped as categories
+   * @param value {string} Value of the action done to the object
+   * @param task {string|HuhaTask} Task associated to the event
+   * @param options {object} Object containing the configuration of the class. Options available
+   * are:
+   * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
+   *   Analytics
+   * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
+   */
+  constructor(name, object, action, section, value, task, options) {
+    const mergedOptions = Object.assign(DEFAULTS, options || {});
+
+    this.name = name;
+    this.object = object;
+    this.action = action;
+    this.section = section;
+    this.value = value;
+    this.task = task;
+
+    this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
+    this.trackOnSegment = mergedOptions.trackOnSegment;
+  }
+
+  /**
+   * Tracks the event in external services like Google Analytics or Segment
+   */
+  track() {
+    if (this.trackOnGoogleAnalytics) {
+      this.sendToGoogleAnalytics();
+    }
+
+    if (this.trackOnSegment) {
+      this.sendToSegment();
+    }
+  }
+
+  /**
+   * Tracks the event using a event in Google Analytics
+   */
+  sendToGoogleAnalytics() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', this.action, {
+        event_category: this.section,
+        event_label: this.object,
+        value: this.value,
+      });
+    } else if (typeof ga !== 'undefined') {
+      ga('send', 'event', this.action, this.section, this.object, this.value);
+    }
+  }
+
+  /**
+   * Tracks the event using a event in Segment
+   */
+  sendToSegment() {
+    if (typeof analytics !== 'undefined') {
+      analytics.track(this.name, {
+        category: this.section,
+        label: this.object,
+        action: this.action,
+        value: this.value,
+      });
+    }
+  }
 }
 
 /**
@@ -157,15 +259,18 @@ class Huha {
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task need to be tracked on Google
    *   Analytics
    * - trackOnIntercom (Boolean): Indicates if the task need to be tracked on Intercom
+   * - trackOnSegment (Boolean): Indicates if the task need to be tracked on Segment
    */
   constructor(options) {
     this.tasks = [];
+    this.events = [];
 
     const mergedOptions = Object.assign(DEFAULTS, options || {});
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
+    this.trackOnSegment = mergedOptions.trackOnSegment;
 
-    this.setUpEvents();
+    this._setUpEvents();
   }
 
   /**
@@ -183,11 +288,35 @@ class Huha {
     const huhaTask = new HuhaTask(name, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnIntercom: this.trackOnIntercom,
+      trackOnSegment: this.trackOnSegment,
     });
 
     this.tasks.push(huhaTask);
 
     return huhaTask;
+  }
+
+  /**
+   * Creates, tracks and returns a event with the given data
+   * @param name {string} Name of the event.
+   * @param object {string} Name of the object that is being manipulated during the event
+   * @param action {string} Name of the action that is being executed in the object during the event
+   * @param section {string} Name of the the section og this event, so it can be grouped as categories
+   * @param value {string} Value of the action done to the object
+   * @param task {string|HuhaTask} Task associated to the event
+   * @returns {HuhaEvent}
+   */
+  createEvent(name, object, action, section, value, task) {
+    const huhaEvent = new HuhaEvent(name, object, action, section, value, task, {
+      trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
+      trackOnSegment: this.trackOnSegment,
+    });
+
+    huhaEvent.track();
+
+    this.events.push(huhaEvent);
+
+    return huhaEvent;
   }
 
   /**
@@ -202,10 +331,10 @@ class Huha {
   /**
    * Adds all the event listeners needed
    */
-  setUpEvents() {
+  _setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
     global.addEventListener('beforeunload', () => {
-      this.abandonInProgressTasks();
+      this._abandonInProgressTasks();
     });
 
     // Listen to events defined directly on the DOM
@@ -213,7 +342,7 @@ class Huha {
     events.forEach((eventName) => {
       document.querySelector('body').addEventListener(eventName, (evt) => {
         if ('huhaTask' in evt.target.dataset) {
-          this.registerEvent(eventName, evt.target);
+          this._registerEvent(eventName, evt.target);
         }
       }, true);
     });
@@ -225,7 +354,7 @@ class Huha {
    * one defined on the element, the action will be registered
    * @param element {object} Element that has triggered the captured event
    */
-  registerEvent(capturedEvent, element) {
+  _registerEvent(capturedEvent, element) {
     const { dataset } = element;
     const taskName = dataset.huhaTask;
     const actionTrigger = dataset.huhaTrigger;
@@ -254,7 +383,7 @@ class Huha {
   /**
    * Abandons all the tasks that are in progress
    */
-  abandonInProgressTasks() {
+  _abandonInProgressTasks() {
     const pendingTasks = this.tasks.filter(task => task.status === IN_PROGRESS);
     pendingTasks.forEach(task => task.abandon());
   }

@@ -3,6 +3,10 @@ const gulpLoadPlugins = require('gulp-load-plugins');
 const del = require('del');
 const runSequence = require('run-sequence');
 const packageJson = require('./package.json');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 const $ = gulpLoadPlugins();
 
@@ -27,12 +31,19 @@ gulp.task('lint', () => {
 });
 
 gulp.task('build', () => {
-  return gulp.src('src/huha.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.babel())
+  const b = browserify({
+    entries: 'src/huha.js',
+    debug: true,
+    transform: babelify,
+    standalone: 'Huha',
+  });
+
+  return b.bundle()
+    .pipe(source('huha.js'))
+    .pipe(buffer())
+    .pipe($.sourcemaps.init({ loadMaps: true }))
     .pipe($.uglify())
-    .pipe($.sourcemaps.write('.'))
+    .pipe($.sourcemaps.write('./'))
     .pipe($.size({ title: 'build', gzip: true }))
     .pipe(gulp.dest(buildFolder))
     .pipe(gulp.dest(versionedBuildFolder))
@@ -43,4 +54,22 @@ gulp.task('clean', del.bind(null, ['dist']));
 
 gulp.task('default', (done) => {
   runSequence('clean', 'build', done);
+});
+
+gulp.task('deploy', ['default'], () => {
+  const publisher = $.awspublish.create({
+    'params': {
+      'Bucket': process.env.HUHA_S3_BUCKET
+    },
+    'accessKeyId': process.env.HUHA_S3_ACCESS_KEY_ID,
+    'secretAccessKey': process.env.HUHA_S3_SECRET_ACCESS_KEY,
+  });
+
+  const headers = {
+    'Cache-Control': 'max-age=315360000, no-transform, public'
+  };
+
+  return gulp.src('dist/**/*.*')
+    .pipe(publisher.publish(headers))
+    .pipe($.awspublish.reporter());
 });
