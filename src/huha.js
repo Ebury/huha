@@ -186,8 +186,8 @@ class HuhaEvent {
    * @param action {string} Name of the action that is being executed in the object during the event
    * @param section {string} Name of the the section og this event, so it can be grouped as categories
    * @param value {string} Value of the action done to the object
-   * @param eventGroup {string} Identifier of the group this event is linked to
    * @param task {string|HuhaTask} Task associated to the event
+   * @param eventGroup {string} Identifier of the group this event is linked to
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -308,12 +308,12 @@ class Huha {
    * @param action {string} Name of the action that is being executed in the object during the event
    * @param section {string} Name of the the section og this event, so it can be grouped as categories
    * @param value {string} Value of the action done to the object
-   * @param eventGroup {string} Identifier of the group this event is linked to
    * @param task {string|HuhaTask} Task associated to the event
+   * @param eventGroup {string} Identifier of the group this event is linked to
    * @returns {HuhaEvent}
    */
   createEvent(name, object, action, section, value, eventGroup, task) {
-    const huhaEvent = new HuhaEvent(name, object, action, section, value, eventGroup, task, {
+    const huhaEvent = new HuhaEvent(name, object, action, section, value, task, eventGroup, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnSegment: this.trackOnSegment,
     });
