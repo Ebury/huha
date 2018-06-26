@@ -1,7 +1,7 @@
 {
   "name": "@ebury/huha",
   "description": "huha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "repository": "github:Ebury/huha",
   "license": "MIT",
   "scripts": {
@@ -13,24 +13,27 @@
     "extends": "airbnb-base"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^22.4.3",
+    "babelify": "^9.0.0",
+    "browserify": "^16.2.2",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.10.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-awspublish": "^3.3.3",
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
-    "gulp-plumber": "^1.1.0",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "jest": "^22.4.3",
-    "run-sequence": "^2.1.0"
+    "run-sequence": "^2.1.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "babel": {
     "presets": [
@@ -47,7 +50,8 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.42"
+    "@babel/polyfill": "^7.0.0-beta.42",
+    "uuid": "^3.2.1"
   },
   "main": "dist/huha.js"
 }
