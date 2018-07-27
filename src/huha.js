@@ -235,7 +235,7 @@ class HuhaEvent {
         value: this.value,
       });
     } else if (typeof ga !== 'undefined') {
-      ga('send', 'event', this.action, this.section, this.object, this.value);
+      ga('send', 'event', this.section, this.action, this.object, this.value);
     }
   }
 
