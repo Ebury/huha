@@ -13,24 +13,24 @@
     "extends": "airbnb-base"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^22.4.3",
+    "babel-jest": "^22.4.4",
     "babelify": "^9.0.0",
     "browserify": "^16.2.2",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-import": "^2.14.0",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.3",
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^2.6.1",
-    "gulp-uglify": "^3.0.0",
-    "jest": "^22.4.3",
+    "gulp-uglify": "^3.0.1",
+    "jest": "^22.4.4",
     "run-sequence": "^2.1.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
@@ -50,8 +50,8 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.42",
-    "uuid": "^3.2.1"
+    "@babel/polyfill": "^7.0.0-rc.1",
+    "uuid": "^3.3.2"
   },
   "main": "dist/huha.js"
 }

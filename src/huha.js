@@ -353,7 +353,7 @@ class Huha {
    */
   setUpEvents() {
     // Abandon all tasks in progress if the user exits the page
-    global.addEventListener('beforeunload', () => {
+    global.addEventListener('unload', () => {
       this.abandonInProgressTasks();
     });
 
