@@ -21,6 +21,7 @@ class HuhaTask {
   /**
    * Constructor of the HuhTask
    * @param name {string} Name of the task
+   * @param parentTask {object} huha parent task
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -28,7 +29,7 @@ class HuhaTask {
    * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, options) {
+  constructor(name, parentTask, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = name;
     this.status = IN_PROGRESS;
@@ -39,6 +40,9 @@ class HuhaTask {
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
     this.trackOnSegment = mergedOptions.trackOnSegment;
+    if (parentTask) {
+      this.parentTask = parentTask;
+    }
   }
 
   /**
@@ -46,6 +50,9 @@ class HuhaTask {
    */
   addInteraction() {
     this.effort += 1;
+    if (this.parentTask) {
+      this.parentTask.addInteraction();
+    }
   }
 
   /**
@@ -53,6 +60,9 @@ class HuhaTask {
    */
   addError() {
     this.errors += 1;
+    if (this.parentTask) {
+      this.parentTask.addError();
+    }
   }
 
   /**
@@ -284,15 +294,16 @@ class Huha {
    * Creates and returns a task with the given name. If another task with the same name already
    * exists, it will be abandoned
    * @param name {string} Name of the task.
+   * @param parentTask {object} huha parent task.
    * @returns {HuhaTask}
    */
-  createTask(name) {
+  createTask(name, parentTask) {
     const existingTask = this.getTask(name);
     if (typeof existingTask !== 'undefined') {
       existingTask.abandon();
     }
 
-    const huhaTask = new HuhaTask(name, {
+    const huhaTask = new HuhaTask(name, parentTask, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnIntercom: this.trackOnIntercom,
       trackOnSegment: this.trackOnSegment,
