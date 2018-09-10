@@ -65,7 +65,7 @@ import Huha from '@ebury/huha';
 const huha = new Huha({
   trackOnGoogleAnalytics: false,
   trackOnIntercom: false,
-  trackOSegmenet: true,
+  trackOnSegment: true,
 });
 const huhaTask = huha.createTask('TaskName');
 huhaTask.addInteraction();
