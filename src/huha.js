@@ -22,6 +22,7 @@ class HuhaTask {
    * Constructor of the HuhTask
    * @param name {string} Name of the task
    * @param parentTask {object} huha parent task
+   * @param execId {string} Identifier to link events to tasks
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -29,7 +30,7 @@ class HuhaTask {
    * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, parentTask, options) {
+  constructor(name, parentTask, execId, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = name;
     this.status = IN_PROGRESS;
@@ -43,6 +44,7 @@ class HuhaTask {
     if (parentTask) {
       this.parentTask = parentTask;
     }
+    this.execId = execId || uuidv1();
   }
 
   /**
@@ -160,6 +162,7 @@ class HuhaTask {
         effort: this.effort,
         time: this.time,
         status: this.status,
+        execId: this.execId,
       });
     }
   }
@@ -180,6 +183,7 @@ class HuhaTask {
         time: this.time,
         result: this.status,
         started: this.start,
+        execId: this.execId,
       });
     }
   }
@@ -215,7 +219,13 @@ class HuhaEvent {
     this.section = section;
     this.value = value;
     this.task = task;
-    this.eventGroup = eventGroup || uuidv1();
+    if (eventGroup) {
+      this.eventGroup = eventGroup;
+    } else if (this.task && this.task.execId) {
+      this.eventGroup = this.task.execId;
+    } else {
+      this.eventGroup = uuidv1();
+    }
 
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnSegment = mergedOptions.trackOnSegment;
@@ -295,15 +305,16 @@ class Huha {
    * exists, it will be abandoned
    * @param name {string} Name of the task.
    * @param parentTask {object} huha parent task.
+   * @param execId {string} Identifier to link events to tasks.
    * @returns {HuhaTask}
    */
-  createTask(name, parentTask) {
+  createTask(name, parentTask, execId) {
     const existingTask = this.getTask(name);
     if (typeof existingTask !== 'undefined') {
       existingTask.abandon();
     }
 
-    const huhaTask = new HuhaTask(name, parentTask, {
+    const huhaTask = new HuhaTask(name, parentTask, execId, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnIntercom: this.trackOnIntercom,
       trackOnSegment: this.trackOnSegment,
