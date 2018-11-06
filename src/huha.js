@@ -337,7 +337,9 @@ class Huha {
         trackOnIntercom: this.trackOnIntercom,
         trackOnSegment: this.trackOnSegment,
       });
-      this.saveInLocalStorage(huhaTask, persistent);
+      if (persistent) {
+        this.saveInLocalStorage(huhaTask);
+      }
     }
 
     this.tasks.push(huhaTask);
@@ -454,12 +456,9 @@ class Huha {
   /**
    * Saves an huha task in localStorage
    * @param huhaTask
-   * @param persistent
    */
-  saveInLocalStorage(huhaTask, persistent) {
-    if (persistent) {
-      localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
-    }
+  saveInLocalStorage(huhaTask) {
+    localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
   }
 }
 
