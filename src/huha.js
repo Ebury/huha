@@ -373,7 +373,10 @@ class Huha {
   }
 
   /**
-   * Gets an in progress task giving its name
+   * Gets an in progress task giving its name. First, we search in the dictionary.
+   * If the task is not found, then we search in localStorage.
+   * If the task is in localStorage, JSON can not serialize functions, so
+   * we create an aux task to get the prototype and set it to the task got.
    * @param name {string} Name of the task
    * @returns {HuhaTask}
    */
