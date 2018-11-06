@@ -23,6 +23,7 @@ class HuhaTask {
    * @param name {string} Name of the task
    * @param parentTask {object} huha parent task
    * @param execId {string} Identifier to link events to tasks
+   * @param persistent {boolean} Indicates if the task should be persisted.
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -30,7 +31,7 @@ class HuhaTask {
    * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, parentTask, execId, options) {
+  constructor(name, parentTask, execId, persistent, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = name;
     this.status = IN_PROGRESS;
@@ -45,6 +46,7 @@ class HuhaTask {
       this.parentTask = parentTask;
     }
     this.execId = execId || uuidv1();
+    this.persistent = persistent || false;
   }
 
   /**
@@ -76,6 +78,7 @@ class HuhaTask {
       this.end = new Date().getTime();
       this.status = status;
       this.track();
+      this.removeFromLocalStorage();
     }
   }
 
@@ -163,6 +166,7 @@ class HuhaTask {
         time: this.time,
         status: this.status,
         execId: this.execId,
+        persistent: this.persistent,
       });
     }
   }
@@ -184,7 +188,17 @@ class HuhaTask {
         result: this.status,
         started: this.start,
         execId: this.execId,
+        persistent: this.persistent,
       });
+    }
+  }
+
+  /**
+   * Removes task from localStorage if is persistent
+   */
+  removeFromLocalStorage() {
+    if (this.persistent) {
+      localStorage.removeItem(this.name);
     }
   }
 }
@@ -306,19 +320,27 @@ class Huha {
    * @param name {string} Name of the task.
    * @param parentTask {object} huha parent task.
    * @param execId {string} Identifier to link events to tasks.
+   * @param persistent {boolean} Indicates if the task should be persisted.
    * @returns {HuhaTask}
    */
-  createTask(name, parentTask, execId) {
+  createTask(name, parentTask, execId, persistent) {
     const existingTask = this.getTask(name);
-    if (typeof existingTask !== 'undefined') {
+    if (typeof existingTask !== 'undefined' && !existingTask.persistent) {
       existingTask.abandon();
     }
-
-    const huhaTask = new HuhaTask(name, parentTask, execId, {
-      trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
-      trackOnIntercom: this.trackOnIntercom,
-      trackOnSegment: this.trackOnSegment,
-    });
+    let huhaTask = null;
+    if (existingTask && existingTask.persistent) {
+      huhaTask = existingTask;
+    } else {
+      huhaTask = new HuhaTask(name, parentTask, execId, persistent, {
+        trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
+        trackOnIntercom: this.trackOnIntercom,
+        trackOnSegment: this.trackOnSegment,
+      });
+      if (persistent) {
+        this.saveInLocalStorage(huhaTask);
+      }
+    }
 
     this.tasks.push(huhaTask);
 
@@ -351,12 +373,23 @@ class Huha {
   }
 
   /**
-   * Gets an in progress task giving its name
+   * Gets an in progress task giving its name. First, we search in the dictionary.
+   * If the task is not found, then we search in localStorage.
+   * If the task is in localStorage, JSON can not serialize functions, so
+   * we create an aux task to get the prototype and set it to the task got.
    * @param name {string} Name of the task
    * @returns {HuhaTask}
    */
   getTask(name) {
-    return this.tasks.find(task => task.name === name && task.status === IN_PROGRESS);
+    let searchTask = this.tasks.find(task => task.name === name && task.status === IN_PROGRESS);
+    if (!searchTask) {
+      searchTask = JSON.parse(localStorage.getItem(name)) || undefined;
+      if (searchTask) {
+        const auxTask = new HuhaTask(name, '', '', false, {});
+        Object.setPrototypeOf(searchTask, Object.getPrototypeOf(auxTask));
+      }
+    }
+    return searchTask;
   }
 
   /**
@@ -416,7 +449,19 @@ class Huha {
    */
   abandonInProgressTasks() {
     const pendingTasks = this.tasks.filter(task => task.status === IN_PROGRESS);
-    pendingTasks.forEach(task => task.abandon());
+    pendingTasks.forEach((task) => {
+      if (!task.persistent) {
+        task.abandon();
+      }
+    });
+  }
+
+  /**
+   * Saves an huha task in localStorage
+   * @param huhaTask
+   */
+  saveInLocalStorage(huhaTask) {
+    localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
   }
 }
 
