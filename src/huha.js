@@ -1,4 +1,4 @@
-/* global ga, Intercom, gtag, analytics */
+/* global ga, Intercom, gtag, analytics, localStorage */
 
 import uuidv1 from 'uuid/v1';
 
@@ -338,7 +338,7 @@ class Huha {
         trackOnSegment: this.trackOnSegment,
       });
       if (persistent) {
-        this.saveInLocalStorage(huhaTask);
+        localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
       }
     }
 
@@ -454,14 +454,6 @@ class Huha {
         task.abandon();
       }
     });
-  }
-
-  /**
-   * Saves an huha task in localStorage
-   * @param huhaTask
-   */
-  saveInLocalStorage(huhaTask) {
-    localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
   }
 }
 
