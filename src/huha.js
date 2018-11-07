@@ -338,6 +338,7 @@ class Huha {
         trackOnSegment: this.trackOnSegment,
       });
       if (persistent) {
+        // If persistent, then saves the huha task in localStorage
         localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
       }
     }
