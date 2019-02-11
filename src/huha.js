@@ -39,11 +39,13 @@ class HuhaTask {
     this.errors = 0;
     this.start = new Date().getTime();
     this.end = null;
+    this.parentExecId = null;
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
     this.trackOnSegment = mergedOptions.trackOnSegment;
     if (parentTask) {
       this.parentTask = parentTask;
+      this.parentExecId = parentTask.execId;
     }
     this.execId = execId || uuidv1();
     this.persistent = persistent || false;
@@ -167,6 +169,7 @@ class HuhaTask {
         status: this.status,
         execId: this.execId,
         persistent: this.persistent,
+        parentExecId: this.parentExecId,
       });
     }
   }
@@ -189,6 +192,7 @@ class HuhaTask {
         started: this.start,
         execId: this.execId,
         persistent: this.persistent,
+        parentExecId: this.parentExecId,
       });
     }
   }
