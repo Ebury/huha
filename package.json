@@ -7,7 +7,8 @@
   "scripts": {
     "lint": "gulp lint",
     "build": "gulp build",
-    "prebuild": "npm run lint"
+    "prebuild": "npm run lint",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "airbnb-base"
@@ -53,5 +54,9 @@
     "@babel/polyfill": "^7.0.0-rc.1",
     "uuid": "^3.3.2"
   },
-  "main": "dist/huha.js"
+  "main": "dist/huha.js",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  }
 }
