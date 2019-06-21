@@ -7,10 +7,15 @@
   "scripts": {
     "lint": "gulp lint",
     "build": "gulp build",
-    "prebuild": "npm run lint"
+    "prebuild": "npm run lint",
+    "test": "jest"
   },
   "eslintConfig": {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "plugins": ["jest"],
+    "env": {
+      "jest/globals": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
@@ -23,6 +28,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.7.0",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.3",
     "gulp-eslint": "^4.0.0",
@@ -53,5 +59,9 @@
     "@babel/polyfill": "^7.0.0-rc.1",
     "uuid": "^3.3.2"
   },
-  "main": "dist/huha.js"
+  "main": "dist/huha.js",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  }
 }
