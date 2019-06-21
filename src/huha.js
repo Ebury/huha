@@ -58,6 +58,7 @@ class HuhaTask {
     this.effort += 1;
     if (this.parentTask) {
       this.parentTask.addInteraction();
+      this.updateFromLocalStorage();
     }
   }
 
@@ -68,6 +69,7 @@ class HuhaTask {
     this.errors += 1;
     if (this.parentTask) {
       this.parentTask.addError();
+      this.updateFromLocalStorage();
     }
   }
 
@@ -194,6 +196,15 @@ class HuhaTask {
         persistent: this.persistent,
         parentExecId: this.parentExecId,
       });
+    }
+  }
+
+  /**
+   * Updates the parent task from localStorage if is persistent
+   */
+  updateFromLocalStorage() {
+    if (this.parentTask.persistent) {
+      localStorage.setItem(this.parentTask.name, JSON.stringify(this.parentTask));
     }
   }
 
