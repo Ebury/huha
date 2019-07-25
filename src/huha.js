@@ -21,6 +21,9 @@ class HuhaTask {
   /**
    * Constructor of the HuhTask
    * @param name {string} Name of the task
+   * @param section {string} Name of the the section of the task, so it can be grouped as
+   * categories
+   * @param value {string} Value of the action done to the object
    * @param parentTask {object} huha parent task
    * @param execId {string} Identifier to link events to tasks
    * @param persistent {boolean} Indicates if the task should be persisted.
@@ -31,9 +34,11 @@ class HuhaTask {
    * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, parentTask, execId, persistent, options) {
+  constructor(name, section, value, parentTask, execId, persistent, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = name;
+    this.section = section;
+    this.value = value;
     this.status = IN_PROGRESS;
     this.effort = 0;
     this.errors = 0;
@@ -172,6 +177,8 @@ class HuhaTask {
         execId: this.execId,
         persistent: this.persistent,
         parentExecId: this.parentExecId,
+        category: this.section,
+        value: this.value || this.time,
       });
     }
   }
@@ -183,10 +190,11 @@ class HuhaTask {
   sendToSegment() {
     if (typeof analytics !== 'undefined') {
       analytics.track(this.name, {
-        category: this.name,
+        name: this.name,
+        category: this.section,
+        value: this.value || this.time,
         action: this.status,
         label: 'Task',
-        value: 1,
         errors: this.errors,
         effort: this.effort,
         time: this.time,
@@ -333,12 +341,15 @@ class Huha {
    * Creates and returns a task with the given name. If another task with the same name already
    * exists, it will be abandoned
    * @param name {string} Name of the task.
+   * @param section {string} Name of the the section of the task, so it can be grouped as
+   * categories
+   * @param value {string} Value of the action done to the object
    * @param parentTask {object} huha parent task.
    * @param execId {string} Identifier to link events to tasks.
    * @param persistent {boolean} Indicates if the task should be persisted.
    * @returns {HuhaTask}
    */
-  createTask(name, parentTask, execId, persistent) {
+  createTask(name, section, value, parentTask, execId, persistent) {
     const existingTask = this.getTask(name);
     if (typeof existingTask !== 'undefined' && !existingTask.persistent) {
       existingTask.abandon();
@@ -347,7 +358,7 @@ class Huha {
     if (existingTask && existingTask.persistent) {
       huhaTask = existingTask;
     } else {
-      huhaTask = new HuhaTask(name, parentTask, execId, persistent, {
+      huhaTask = new HuhaTask(name, section, value, parentTask, execId, persistent, {
         trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
         trackOnIntercom: this.trackOnIntercom,
         trackOnSegment: this.trackOnSegment,
