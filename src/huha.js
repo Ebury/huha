@@ -177,7 +177,7 @@ class HuhaTask {
         execId: this.execId,
         persistent: this.persistent,
         parentExecId: this.parentExecId,
-        category: this.section,
+        category: this.category,
         value: this.value || this.time,
       });
     }
@@ -191,7 +191,7 @@ class HuhaTask {
     if (typeof analytics !== 'undefined') {
       analytics.track(this.name, {
         name: this.name,
-        category: this.section,
+        category: this.category,
         value: this.value || this.time,
         action: this.status,
         label: 'Task',
