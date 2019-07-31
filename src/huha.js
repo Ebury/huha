@@ -22,7 +22,7 @@ class HuhaTask {
    * Constructor of the HuhTask
    * @param props of the task {object} contain the next fields:
    * - name {string} Name of the task
-   * - label {string} Label of the task
+   * - label {string} Label of the task (if it is not defined, by default is the task name)
    * - category {string} Name of the category of the task
    * - value {string} Value of the action done to the object
    * - parentTask {object} huha parent task
@@ -345,7 +345,7 @@ class Huha {
    * exists, it will be abandoned
    * @param properties of the task {object} contain the next fields:
    * - name {string} Name of the task.
-   * - label {string} Label of the task
+   * - label {string} Label of the task (if it is not defined, by default is the task name)
    * - category {string} Name of the category of the task
    * - value {string} Value of the action done to the object
    * - parentTask {object} huha parent task.
