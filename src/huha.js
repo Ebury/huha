@@ -21,12 +21,12 @@ class HuhaTask {
   /**
    * Constructor of the HuhTask
    * @param props of the task {object} contain the next fields:
-   * name {string} Name of the task
-   * category {string} Name of the category of the task
-   * value {string} Value of the action done to the object
-   * parentTask {object} huha parent task
-   * execId {string} Identifier to link events to tasks
-   * persistent {boolean} Indicates if the task should be persisted.
+   * - name {string} Name of the task
+   * - category {string} Name of the category of the task
+   * - value {string} Value of the action done to the object
+   * - parentTask {object} huha parent task
+   * - execId {string} Identifier to link events to tasks
+   * - persistent {boolean} Indicates if the task should be persisted.
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -341,12 +341,12 @@ class Huha {
    * Creates and returns a task with the given name. If another task with the same name already
    * exists, it will be abandoned
    * @param properties of the task {object} contain the next fields:
-   * name {string} Name of the task.
-   * category {string} Name of the category of the task
-   * value {string} Value of the action done to the object
-   * parentTask {object} huha parent task.
-   * execId {string} Identifier to link events to tasks.
-   * persistent {boolean} Indicates if the task should be persisted.
+   * - name {string} Name of the task.
+   * - category {string} Name of the category of the task
+   * - value {string} Value of the action done to the object
+   * - parentTask {object} huha parent task.
+   * - execId {string} Identifier to link events to tasks.
+   * - persistent {boolean} Indicates if the task should be persisted.
    * @returns {HuhaTask}
    */
   createTask(properties) {
