@@ -31,7 +31,7 @@ test('it should create a task with the parameters defined', () => {
   expect(task.status).toBe('In progress');
 });
 
-test('it should create a task with label as "Task" if it is not defined', () => {
+test('it should create a task with the label equal to the task name if it is not defined', () => {
   const huha = new Huha();
 
   // Check the number of the tasks
@@ -45,7 +45,7 @@ test('it should create a task with label as "Task" if it is not defined', () => 
   // Checking results
   expect(huha.tasks.length).toBe(1);
   expect(task).toBeDefined();
-  expect(task.label).toBe('Task');
+  expect(task.label).toBe('mockTask-1');
 });
 
 test('it should add one interaction', () => {

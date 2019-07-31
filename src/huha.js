@@ -38,7 +38,7 @@ class HuhaTask {
   constructor(props, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = props.name;
-    this.label = props.label || 'Task';
+    this.label = props.label || props.name;
     this.category = props.category || '';
     this.value = props.value;
     this.status = IN_PROGRESS;
