@@ -20,10 +20,13 @@ const DEFAULTS = {
 class HuhaTask {
   /**
    * Constructor of the HuhTask
-   * @param name {string} Name of the task
-   * @param parentTask {object} huha parent task
-   * @param execId {string} Identifier to link events to tasks
-   * @param persistent {boolean} Indicates if the task should be persisted.
+   * @param props of the task {object} contain the next fields:
+   * - name {string} Name of the task
+   * - category {string} Name of the category of the task
+   * - value {string} Value of the action done to the object
+   * - parentTask {object} huha parent task
+   * - execId {string} Identifier to link events to tasks
+   * - persistent {boolean} Indicates if the task should be persisted.
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
@@ -31,9 +34,11 @@ class HuhaTask {
    * - trackOnIntercom (Boolean): Indicates if the task needs to be tracked on Intercom
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, parentTask, execId, persistent, options) {
+  constructor(props, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
-    this.name = name;
+    this.name = props.name;
+    this.category = props.category || '';
+    this.value = props.value;
     this.status = IN_PROGRESS;
     this.effort = 0;
     this.errors = 0;
@@ -43,12 +48,12 @@ class HuhaTask {
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
     this.trackOnSegment = mergedOptions.trackOnSegment;
-    if (parentTask) {
-      this.parentTask = parentTask;
-      this.parentExecId = parentTask.execId;
+    if (props.parentTask) {
+      this.parentTask = props.parentTask;
+      this.parentExecId = props.parentTask.execId;
     }
-    this.execId = execId || uuidv1();
-    this.persistent = persistent || false;
+    this.execId = props.execId || uuidv1();
+    this.persistent = props.persistent || false;
   }
 
   /**
@@ -172,6 +177,8 @@ class HuhaTask {
         execId: this.execId,
         persistent: this.persistent,
         parentExecId: this.parentExecId,
+        category: this.category,
+        value: this.value || this.time,
       });
     }
   }
@@ -183,10 +190,11 @@ class HuhaTask {
   sendToSegment() {
     if (typeof analytics !== 'undefined') {
       analytics.track(this.name, {
-        category: this.name,
+        name: this.name,
+        category: this.category,
+        value: this.value || this.time,
         action: this.status,
         label: 'Task',
-        value: 1,
         errors: this.errors,
         effort: this.effort,
         time: this.time,
@@ -332,14 +340,17 @@ class Huha {
   /**
    * Creates and returns a task with the given name. If another task with the same name already
    * exists, it will be abandoned
-   * @param name {string} Name of the task.
-   * @param parentTask {object} huha parent task.
-   * @param execId {string} Identifier to link events to tasks.
-   * @param persistent {boolean} Indicates if the task should be persisted.
+   * @param properties of the task {object} contain the next fields:
+   * - name {string} Name of the task.
+   * - category {string} Name of the category of the task
+   * - value {string} Value of the action done to the object
+   * - parentTask {object} huha parent task.
+   * - execId {string} Identifier to link events to tasks.
+   * - persistent {boolean} Indicates if the task should be persisted.
    * @returns {HuhaTask}
    */
-  createTask(name, parentTask, execId, persistent) {
-    const existingTask = this.getTask(name);
+  createTask(properties) {
+    const existingTask = this.getTask(properties.name);
     if (typeof existingTask !== 'undefined' && !existingTask.persistent) {
       existingTask.abandon();
     }
@@ -347,12 +358,12 @@ class Huha {
     if (existingTask && existingTask.persistent) {
       huhaTask = existingTask;
     } else {
-      huhaTask = new HuhaTask(name, parentTask, execId, persistent, {
+      huhaTask = new HuhaTask(properties, {
         trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
         trackOnIntercom: this.trackOnIntercom,
         trackOnSegment: this.trackOnSegment,
       });
-      if (persistent) {
+      if (properties.persistent) {
         // If persistent, then saves the huha task in localStorage
         localStorage.setItem(huhaTask.name, JSON.stringify(huhaTask));
       }
@@ -401,8 +412,14 @@ class Huha {
     if (!searchTask) {
       searchTask = JSON.parse(localStorage.getItem(name)) || undefined;
       if (searchTask) {
-        const auxTask = new HuhaTask(name, '', '', false, {});
+        const properties = { name };
+        const auxTask = new HuhaTask(properties, {});
         Object.setPrototypeOf(searchTask, Object.getPrototypeOf(auxTask));
+
+        // If the task found has parentTask, set also the prototype to access to the methods.
+        if (searchTask.parentTask) {
+          Object.setPrototypeOf(searchTask.parentTask, Object.getPrototypeOf(auxTask));
+        }
       }
     }
     return searchTask;
@@ -442,7 +459,7 @@ class Huha {
 
     if (capturedEvent === actionTrigger) {
       if (eventType === 'start') {
-        this.createTask(taskName);
+        this.createTask({ name: taskName });
       } else {
         const task = this.getTask(taskName);
         if (task) {
