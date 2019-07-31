@@ -22,6 +22,7 @@ class HuhaTask {
    * Constructor of the HuhTask
    * @param props of the task {object} contain the next fields:
    * - name {string} Name of the task
+   * - label {string} Label of the task
    * - category {string} Name of the category of the task
    * - value {string} Value of the action done to the object
    * - parentTask {object} huha parent task
@@ -37,6 +38,7 @@ class HuhaTask {
   constructor(props, options) {
     const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = props.name;
+    this.label = props.label || 'Task';
     this.category = props.category || '';
     this.value = props.value;
     this.status = IN_PROGRESS;
@@ -179,6 +181,7 @@ class HuhaTask {
         parentExecId: this.parentExecId,
         category: this.category,
         value: this.value || this.time,
+        label: this.label,
       });
     }
   }
@@ -191,10 +194,10 @@ class HuhaTask {
     if (typeof analytics !== 'undefined') {
       analytics.track(this.name, {
         name: this.name,
+        label: this.label,
         category: this.category,
         value: this.value || this.time,
         action: this.status,
-        label: 'Task',
         errors: this.errors,
         effort: this.effort,
         time: this.time,
@@ -342,6 +345,7 @@ class Huha {
    * exists, it will be abandoned
    * @param properties of the task {object} contain the next fields:
    * - name {string} Name of the task.
+   * - label {string} Label of the task
    * - category {string} Name of the category of the task
    * - value {string} Value of the action done to the object
    * - parentTask {object} huha parent task.

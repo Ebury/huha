@@ -30,7 +30,7 @@ import Huha from '@ebury/huha'
 Alternatively, you can load the script directly from our cdn
 
 ```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.6.0/huha.js"></script>
+<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.6.1/huha.js"></script>
 ```
 
 ### Reference ###
@@ -40,7 +40,7 @@ Alternatively, you can load the script directly from our cdn
 Method | Description |
 ------------- | ------------- |
 `constructor(options)` | Instantiates a new `Huha` class with the given `options`. The `options` argument is an object containing the configuration of the class. Options available are:<br>- `trackOnGoogleAnalytics` (Boolean): Indicates if the task need to be tracked on Google Analytics<br>- `trackOnIntercom` (Boolean): Indicates if the task need to be tracked on Intercom<br>- `trackOnSegment` (Boolean): Indicates if the task need to be tracked on Segment
-`createTask({ name: 'TaskName' })` | Creates and returns a `HuhaTask` class. The `properties` argument is an object containing the given `name` and the other fields are used for providing extra context:<br>- `category`: Name of the category of the task<br>- `value`: Value of the action done to the object<br>- `parentTask` (Object): Huha parent task. Use it to link child tasks to a parent task via the execId<br>- `execId` (String): Identifier to link events to tasks <br>- `persistent` (Boolean): Indicates if the task should be persisted. If the task is persisted, it will be saved on localStorage and you will need to abandon it manually.
+`createTask({ name: 'TaskName' })` | Creates and returns a `HuhaTask` class. The `properties` argument is an object containing the given `name` and the other fields are used for providing extra context:<br>- `label`: Label of the task<br>- `category`: Name of the category of the task<br>- `value`: Value of the action done to the object<br>- `parentTask` (Object): Huha parent task. Use it to link child tasks to a parent task via the execId<br>- `execId` (String): Identifier to link events to tasks <br>- `persistent` (Boolean): Indicates if the task should be persisted. If the task is persisted, it will be saved on localStorage and you will need to abandon it manually.
 `getTask(name)` | Gets an in progress task giving its `name`
 `createEvent(name, object, action, section, value, task, eventGroup)` | Creates, tracks (*) and returns a `HuhaEvent` class with the given `name`. The other params are used for providing extra context:<br>- `object`: Name of the object that is being manipulated during the event<br>- `action`: Name of the action that is being executed in the object during the event<br>- `section`: Name of the the section og this event, so it can be grouped as categories<br>- `value`: Value of the action done to the object<br>- `eventGroup`: Identifier of the group this event is linked to<br>- `task`: Task associated to the event
 
