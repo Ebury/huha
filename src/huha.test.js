@@ -13,6 +13,7 @@ test('it should create a task with the parameters defined', () => {
 
   const taskProperties = {
     name: 'mockTask-1',
+    label: 'mockLabel',
     category: 'mockCategory',
     value: 'mockValue',
   };
@@ -22,11 +23,29 @@ test('it should create a task with the parameters defined', () => {
   expect(huha.tasks.length).toBe(1);
   expect(task).toBeDefined();
   expect(task.name).toBe('mockTask-1');
+  expect(task.label).toBe('mockLabel');
   expect(task.category).toBe('mockCategory');
   expect(task.value).toBe('mockValue');
   expect(task.parentExecId).toBeNull();
   expect(task.persistent).toBeFalsy();
   expect(task.status).toBe('In progress');
+});
+
+test('it should create a task with the label equal to the task name if it is not defined', () => {
+  const huha = new Huha();
+
+  // Check the number of the tasks
+  expect(huha.tasks.length).toBe(0);
+
+  const taskProperties = {
+    name: 'mockTask-1',
+  };
+  const task = huha.createTask(taskProperties);
+
+  // Checking results
+  expect(huha.tasks.length).toBe(1);
+  expect(task).toBeDefined();
+  expect(task.label).toBe('mockTask-1');
 });
 
 test('it should add one interaction', () => {
