@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Deploy to S3
           command: |
-            aws s3 sync --acl public-read dist/ s3://${AWS_BUCKET} --delete --cache-control "max-age=31536000, public"
+            aws s3 sync --acl public-read dist/ s3://${AWS_BUCKET} --cache-control "max-age=31536000, public"
 
 workflows:
   version: 2
