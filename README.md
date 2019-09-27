@@ -30,7 +30,7 @@ import Huha from '@ebury/huha'
 Alternatively, you can load the script directly from our cdn
 
 ```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.6.1/huha.js"></script>
+<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/1.6.4/huha.js"></script>
 ```
 
 ### Reference ###
