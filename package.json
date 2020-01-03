@@ -1,7 +1,7 @@
 {
   "name": "@ebury/huha",
   "description": "huha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
-  "version": "1.6.4",
+  "version": "2.0.0",
   "repository": "github:Ebury/huha",
   "license": "MIT",
   "scripts": {
@@ -22,8 +22,9 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
     "@babel/preset-env": "^7.0.0-rc.1",
+    "@babel/register": "^7.7.7",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^22.4.4",
+    "babel-jest": "^25.0.0",
     "babelify": "^9.0.0",
     "browserify": "^16.2.2",
     "del": "^3.0.0",
@@ -31,27 +32,17 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.7.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-awspublish": "^3.3.3",
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.1",
-    "jest": "^22.4.4",
+    "jest": "^25.0.0",
     "run-sequence": "^2.1.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "useBuiltIns": "usage"
-        }
-      ]
-    ]
   },
   "browserslist": [
     "> 1%",
