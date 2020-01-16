@@ -36,7 +36,6 @@ class HuhaTask {
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
   constructor(props, options) {
-    const mergedOptions = Object.assign(DEFAULTS, options);
     this.name = props.name;
     this.label = props.label || props.name;
     this.category = props.category || '';
@@ -47,9 +46,9 @@ class HuhaTask {
     this.start = new Date().getTime();
     this.end = null;
     this.parentExecId = null;
-    this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
-    this.trackOnIntercom = mergedOptions.trackOnIntercom;
-    this.trackOnSegment = mergedOptions.trackOnSegment;
+    this.trackOnGoogleAnalytics = options.trackOnGoogleAnalytics;
+    this.trackOnIntercom = options.trackOnIntercom;
+    this.trackOnSegment = options.trackOnSegment;
     if (props.parentTask) {
       this.parentTask = props.parentTask;
       this.parentExecId = props.parentTask.execId;
@@ -251,8 +250,6 @@ class HuhaEvent {
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
   constructor(name, object, action, section, value, task, eventGroup, options) {
-    const mergedOptions = Object.assign(DEFAULTS, options || {});
-
     this.name = name;
     this.object = object;
     this.action = action;
@@ -267,8 +264,8 @@ class HuhaEvent {
       this.eventGroup = uuidv1();
     }
 
-    this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
-    this.trackOnSegment = mergedOptions.trackOnSegment;
+    this.trackOnGoogleAnalytics = options.trackOnGoogleAnalytics;
+    this.trackOnSegment = options.trackOnSegment;
   }
 
   /**
@@ -331,8 +328,7 @@ class Huha {
   constructor(options) {
     this.tasks = [];
     this.events = [];
-
-    const mergedOptions = Object.assign(DEFAULTS, options || {});
+    const mergedOptions = { ...DEFAULTS, ...options };
     this.trackOnGoogleAnalytics = mergedOptions.trackOnGoogleAnalytics;
     this.trackOnIntercom = mergedOptions.trackOnIntercom;
     this.trackOnSegment = mergedOptions.trackOnSegment;
