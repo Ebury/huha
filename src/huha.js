@@ -438,7 +438,7 @@ class Huha {
     const events = ['click', 'focus', 'change'];
     events.forEach((eventName) => {
       document.querySelector('body').addEventListener(eventName, (evt) => {
-        if ('huhaTask' in evt.target.dataset) {
+        if (evt.target.dataset && 'huhaTask' in evt.target.dataset) {
           this.registerEvent(eventName, evt.target);
         }
       }, true);
