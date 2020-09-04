@@ -234,30 +234,29 @@ class HuhaTask {
 class HuhaEvent {
   /**
    * Constructor of the HuhaEvent
-   * @param name {string} Name of the event
-   * @param object {string} Name of the object that is being manipulated during the event
-   * @param action {string} Name of the action that is being executed in the object during the
-   * event
-   * @param section {string} Name of the the section og this event, so it can be grouped as
-   * categories
-   * @param value {string} Value of the action done to the object
-   * @param task {string|HuhaTask} Task associated to the event
-   * @param eventGroup {string} Identifier of the group this event is linked to
+   * @param props of the event {object} contain the next fields:
+   * - name {string} Name of the event
+   * - object {string} Name of the object that is being manipulated during the event
+   * - action {string} Name of the action that is being executed in the object during the event
+   * - category {string} Name of the the section of this event, so it can be grouped as categories
+   * - value {string} Value of the action done to the object
+   * - task {string|HuhaTask} Task associated to the event
+   * - eventGroup {string} Identifier of the group this event is linked to
    * @param options {object} Object containing the configuration of the class. Options available
    * are:
    * - trackOnGoogleAnalytics (Boolean): Indicates if the task needs to be tracked on Google
    *   Analytics
    * - trackOnSegment (Boolean): Indicates if the task needs to be tracked on Segment
    */
-  constructor(name, object, action, section, value, task, eventGroup, options) {
-    this.name = name;
-    this.object = object;
-    this.action = action;
-    this.section = section;
-    this.value = value;
-    this.task = task;
-    if (eventGroup) {
-      this.eventGroup = eventGroup;
+  constructor(props, options) {
+    this.name = props.name;
+    this.object = props.object;
+    this.action = props.action;
+    this.category = props.category;
+    this.value = props.value;
+    this.task = props.task;
+    if (props.eventGroup) {
+      this.eventGroup = props.eventGroup;
     } else if (this.task && this.task.execId) {
       this.eventGroup = this.task.execId;
     } else {
@@ -287,12 +286,12 @@ class HuhaEvent {
   sendToGoogleAnalytics() {
     if (typeof gtag !== 'undefined') {
       gtag('event', this.action, {
-        event_category: this.section,
+        event_category: this.category,
         event_label: this.object,
         value: this.value,
       });
     } else if (typeof ga !== 'undefined') {
-      ga('send', 'event', this.section, this.action, this.object, this.value);
+      ga('send', 'event', this.category, this.action, this.object, this.value);
     }
   }
 
@@ -302,7 +301,7 @@ class HuhaEvent {
   sendToSegment() {
     if (typeof analytics !== 'undefined') {
       analytics.track(this.name, {
-        category: this.section,
+        category: this.category,
         label: this.object,
         action: this.action,
         value: this.value,
@@ -376,18 +375,18 @@ class Huha {
 
   /**
    * Creates, tracks and returns a event with the given data
-   * @param name {string} Name of the event.
-   * @param object {string} Name of the object that is being manipulated during the event
-   * @param action {string} Name of the action that is being executed in the object during the event
-   * @param section {string} Name of the the section og this event, so it can be grouped as
-   * categories
-   * @param value {string} Value of the action done to the object
-   * @param task {string|HuhaTask} Task associated to the event
-   * @param eventGroup {string} Identifier of the group this event is linked to
+   * @param properties of the event {object} contain the next fields:
+   * - name {string} Name of the event
+   * - object {string} Name of the object that is being manipulated during the event
+   * - action {string} Name of the action that is being executed in the object during the event
+   * - category {string} Name of the the section of this event, so it can be grouped as categories
+   * - value {string} Value of the action done to the object
+   * - task {string|HuhaTask} Task associated to the event
+   * - eventGroup {string} Identifier of the group this event is linked to
    * @returns {HuhaEvent}
    */
-  createEvent(name, object, action, section, value, task, eventGroup) {
-    const huhaEvent = new HuhaEvent(name, object, action, section, value, task, eventGroup, {
+  createEvent(properties) {
+    const huhaEvent = new HuhaEvent(properties, {
       trackOnGoogleAnalytics: this.trackOnGoogleAnalytics,
       trackOnSegment: this.trackOnSegment,
     });
