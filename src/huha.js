@@ -490,3 +490,5 @@ class Huha {
 }
 
 module.exports = Huha;
+module.exports.HuhaTask = HuhaTask;
+module.exports.HuhaEvent = HuhaEvent;
