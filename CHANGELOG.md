@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - It is necessary pass an object to create an event.
 
 ### Added
-
 - Export HuhaTask and HuhaEvent classes.
 
 ### Changed
