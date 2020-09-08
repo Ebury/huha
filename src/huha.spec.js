@@ -250,18 +250,20 @@ describe('Huha', () => {
     it('should create an event with the parameters defined', () => {
       const huha = new Huha();
 
+      const eventProperties = {
+        name: 'mockEvent',
+        object: 'mockObject',
+        action: 'mockAction',
+        category: 'mockCategory',
+        value: 'mockValue',
+        task: null,
+        eventGroup: 'id-1',
+      };
+
       // Check the number of the events
       expect(huha.events.length).toBe(0);
 
-      const event = huha.createEvent(
-        'mockEvent',
-        'mockObject',
-        'mockAction',
-        'mockSection',
-        'mockValue',
-        null,
-        'id-1',
-      );
+      const event = huha.createEvent(eventProperties);
 
       // Checking results
       expect(huha.events.length).toBe(1);
@@ -269,7 +271,7 @@ describe('Huha', () => {
       expect(event.name).toBe('mockEvent');
       expect(event.object).toBe('mockObject');
       expect(event.action).toBe('mockAction');
-      expect(event.section).toBe('mockSection');
+      expect(event.category).toBe('mockCategory');
       expect(event.value).toBe('mockValue');
       expect(event.task).toBeNull();
       expect(event.eventGroup).toBe('id-1');
@@ -277,6 +279,7 @@ describe('Huha', () => {
 
     it('should create an event with a task associated', () => {
       const huha = new Huha();
+
       const taskProperties = {
         name: 'mockTask-1',
         category: 'mockCategory',
@@ -284,21 +287,23 @@ describe('Huha', () => {
         execId: 'id-1',
       };
       const task = huha.createTask(taskProperties);
-      const event = huha.createEvent(
-        'mockEvent',
-        'mockObject',
-        'mockAction',
-        'mockSection',
-        'mockValue',
+
+      const eventProperties = {
+        name: 'mockEvent',
+        object: 'mockObject',
+        action: 'mockAction',
+        category: 'mockCategory',
+        value: 'mockValue',
         task,
-      );
+      };
+      const event = huha.createEvent(eventProperties);
 
       // Checking results
       expect(event).toBeDefined();
       expect(event.name).toBe('mockEvent');
       expect(event.object).toBe('mockObject');
       expect(event.action).toBe('mockAction');
-      expect(event.section).toBe('mockSection');
+      expect(event.category).toBe('mockCategory');
       expect(event.value).toBe('mockValue');
       expect(event.task).toBeDefined();
       expect(task.execId).toBe('id-1');
