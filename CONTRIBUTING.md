@@ -128,7 +128,7 @@ If you want to report a problem or request some change you can report an issue t
 Depending on the kind of reporter, and when it is detected bugs will be reported as follows:
 
 * If you are a **contributor or code owner** and detect a bug in this project, you must create a JIRA issue in your board with task type **Defect** (see [here](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/123095173/Bugs+and+e2e+philosophy)).
-    * If it is detected during the Software Development Life Cycle [(SDLC)](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/42795535/SDLC), you must create it as subtask of the main task.
+    * If it is detected during the Software Development Life Cycle ([SDLC](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/42795535/SDLC)), you must create it as subtask of the main task.
     * If it is detected during a release, as subtask of the release task.
     * In other cases, as task.
 * **Support team members** will create the JIRA issue as **Bug** and communicate with the code owners if the bug comes from production environment (see [here](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/123095173/Bugs+and+e2e+philosophy)).
