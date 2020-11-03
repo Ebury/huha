@@ -1,3 +1,21 @@
+# Contribution guidelines
+
+1. [Developing](#markdown-header-developing)
+    1. [Style guide](#markdown-header-style-guide)
+    1. [Linting](#markdown-header-linting)
+    1. [Testing](#markdown-header-testing)
+1. [Submitting changes](#markdown-header-submitting-changes)
+    1. [Creating a PR](#markdown-header-creating-a-pr)
+    1. [Quality Gates](#markdown-header-quality-gates)
+    1. [Code Review](#markdown-header-code-review)
+    1. [Evidence of Requirements Implementation](#markdown-header-evidence-of-requirements-implementation)
+    1. [Merge conditions](#markdown-header-merge-conditions)
+1. [Release](#markdown-header-release)
+1. [Reporting a problem or requesting a change](#markdown-header-reporting-a-problem-or-requesting-a-change)
+    1. [How to report a bug](#markdown-header-how-to-report-a-bug)
+    1. [How to request an enhancement](#markdown-header-how-to-request-an-enhancement)
+1. [Thanks](#markdown-header-thanks)
+
 Hi there! We’d love your help if you're interested in contributing to HUHA. It is developed by the [Online team](https://fxsolutions.atlassian.net/wiki/spaces/TEAM/pages/119543461/ONL) members with contributions from other Ebury tech teams. Check the [VISION](VISION.md) for the project as well as the guidelines below to contribute.
 
 These are the steps to contribute with a new change to this repository:
@@ -11,6 +29,10 @@ These are the steps to contribute with a new change to this repository:
 7. When the [Merge conditions](#markdown-header-Merge-conditions) are fulfilled, you can **merge** the code from the PR following the **squash** strategy and **close the issue** in JIRA.
 
 ## Developing
+
+### Style guide
+
+This project has been developed using plain JavaScript. It is not using any library or framework of development. However, to allow the use of the latest versions of JavaScript and ensure compatibility with most browsers, the code is transpiled during the building process via [Babel](https://github.com/babel/babel).
 
 ### Linting
 
@@ -40,6 +62,16 @@ A **Pull Request** (PR) is the method of submitting contributions to the project
 * The **title** follows the format: [issue-id] type: Title of the issue. (i.e. `[ONL-123] chore: Changing the documentation`) Where the type of the commit follows [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 * Update the **description** to include a descriptive text for changes with notes for the reviewers and screenshots if necessary.
 * The default **reviewers** must be the code owners defined in the [CODEOWNERS](CODEOWNERS) file and you must include also some code owners related with third party services, when these changes affects them. Share the PR in [#online-reviews](https://app.slack.com/client/TFMC43PH7/C0132DEVAPM) Slack channel to be reviewed by Online team members.
+
+### Quality Gates
+
+After developing the changes and submitting a **Pull Request** there are a series of Quality Gates and approvals needed in order to merge the code to the `master` branch for releasing a new version.
+
+There are **QG** automatically controlled by the **Continuous Integration** (CI) process at [CircleCI](https://circleci.com/), during the workflow's steps execution, and there are other **QG** that must be checked manually by the code owners. The manual **QG** to check are:
+
+* Enough and appropriate tests coverage.
+* Good documentation for new changes.
+* Follow the [Style guide](#markdown-header-style-guide).
 
 ### Code Review
 
@@ -76,4 +108,36 @@ Before merging a code in a **Pull Request** to the `master` branch, it is requir
 * The **Continuous Integration** (CI) process marks the PR as **green**.
 * There are no **merge conflicts**.
 * The branch must be **updated** with the latest commit of `master` branch.
-* The [required fields](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/913015365/Merging+code) in the issue are **filled**.
+* The required fields in the issue are **filled**.
+* The package.json version must be bumped following the [Semver](https://semver.org/) convention.
+
+## Release
+
+When a PR passes all the **Quality Gates** and is merged to the `master` branch, a new version of HUHA is released automatically.
+
+Each time the code is merge into a remote branch the Continuous Integration process at [CircleCI](https://circleci.com/) is launched. This process is a CircleCI workflow called `build-test-publish-release-deploy`. The process can be followed through the corresponding [pipelines page](https://app.circleci.com/pipelines/github/Ebury/huha).
+
+The workflow's steps that will be executed depend on which branch the code has been merged into. If the code was merged to the development branch the tasks to build the library (`build`) and check the tests (`test`) will be executed. If the code was merge to `master`, in addition to those previously mentioned, the steps that allow publishing the code in the [npm public registry](https://docs.npmjs.com/cli/v6/using-npm/registry) (`publish`), create a new GitHub release (`release`) and finally, deploy to the AWS S3 (`deploy`) will be executed.
+
+## Reporting a problem or requesting a change
+
+If you want to report a problem or request some change you can report an issue to [Eburyonline JIRA project board](https://fxsolutions.atlassian.net/jira/software/c/projects/ONL/issues?filter=allissues).
+
+### How to report a bug
+
+Depending on the kind of reporter, and when it is detected bugs will be reported as follows:
+
+* If you are a **contributor or code owner** and detect a bug in this project, you must create a JIRA issue in your board with task type **Defect** (see [here](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/123095173/Bugs+and+e2e+philosophy)).
+    * If it is detected during the Software Development Life Cycle [(SDLC)](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/42795535/SDLC), you must create it as subtask of the main task.
+    * If it is detected during a release, as subtask of the release task.
+    * In other cases, as task.
+* **Support team members** will create the JIRA issue as **Bug** and communicate with the code owners if the bug comes from production environment (see [here](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/123095173/Bugs+and+e2e+philosophy)).
+
+### How to request an enhancement
+
+If you want to request an enhancement of code in this project, you must create a new task in your board with the task type **Task**, filling the `Components` field with `Huha`, and communicate it to the code owners. The enhancement should be aligned with the [VISION](VISION.md) of the project. If you want to implement the enhancement, follow the [Submitting changes](#markdown-header-submitting-changes) guide to contribute. Thank you for your contributions!
+
+## Thanks!
+
+Thanks! Contributing to HUHA should be easy. If you find any of this hard to figure out, let us know so we can improve our process or documentation!
+README.md
