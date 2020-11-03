@@ -1,32 +1,32 @@
 # Contribution guidelines
 
-1. [Developing](#markdown-header-developing)
-    1. [Style guide](#markdown-header-style-guide)
-    1. [Linting](#markdown-header-linting)
-    1. [Testing](#markdown-header-testing)
-1. [Submitting changes](#markdown-header-submitting-changes)
-    1. [Creating a PR](#markdown-header-creating-a-pr)
-    1. [Quality Gates](#markdown-header-quality-gates)
-    1. [Code Review](#markdown-header-code-review)
-    1. [Evidence of Requirements Implementation](#markdown-header-evidence-of-requirements-implementation)
-    1. [Merge conditions](#markdown-header-merge-conditions)
-1. [Release](#markdown-header-release)
-1. [Reporting a problem or requesting a change](#markdown-header-reporting-a-problem-or-requesting-a-change)
-    1. [How to report a bug](#markdown-header-how-to-report-a-bug)
-    1. [How to request an enhancement](#markdown-header-how-to-request-an-enhancement)
-1. [Thanks](#markdown-header-thanks)
+1. [Developing](#developing)
+    1. [Style guide](#style-guide)
+    1. [Linting](#linting)
+    1. [Testing](#testing)
+1. [Submitting changes](#submitting-changes)
+    1. [Creating a PR](#creating-a-pr)
+    1. [Quality Gates](#quality-gates)
+    1. [Code Review](#code-review)
+    1. [Evidence of Requirements Implementation](#evidence-of-requirements-implementation)
+    1. [Merge conditions](#merge-conditions)
+1. [Release](#release)
+1. [Reporting a problem or requesting a change](#reporting-a-problem-or-requesting-a-change)
+    1. [How to report a bug](#how-to-report-a-bug)
+    1. [How to request an enhancement](#how-to-request-an-enhancement)
+1. [Thanks](#thanks)
 
 Hi there! We’d love your help if you're interested in contributing to HUHA. It is developed by the [Online team](https://fxsolutions.atlassian.net/wiki/spaces/TEAM/pages/119543461/ONL) members with contributions from other Ebury tech teams. Check the [VISION](VISION.md) for the project as well as the guidelines below to contribute.
 
 These are the steps to contribute with a new change to this repository:
 
-1. Create an **issue** in JIRA in your project board, complete the required information, add the issue to your current sprint and set the status to the equivalent to "in progress".
+1. Create an **issue** in JIRA in your project board, complete the required information, add the issue to your current sprint, and set the status to the equivalent to "in progress".
 2. Create a **branch** in the repository from `master` branch. The name of the branch starts with the JIRA issue identifier and some optional suffix. For example, for issue `ONL-123`, the branch can be named `ONL-123-task`.
 3. In every **commit** messages, include a prefix `[ONL-123]` and then a descriptive message. Try to commit frequently and doing commits by atomic changes.
-4. When your change is ready to be reviewed, create a [Pull Request](#markdown-header-creating-a-pr) (PR) from the JIRA issue and move your issue to the correct status.
-5. Manage the [Evidence of Requirements Implementation](#markdown-header-evidence-of-requirements-implementation) (ERI) according to the guidelines and update the JIRA issue status.
-6. During the [Code Review](#markdown-header-code-review) or **ERI** phases, reviewers could propose changes; and it means possible changes and new commits.
-7. When the [Merge conditions](#markdown-header-Merge-conditions) are fulfilled, you can **merge** the code from the PR following the **squash** strategy and **close the issue** in JIRA.
+4. When your change is ready to be reviewed, create a [Pull Request](#creating-a-pr) (PR) from the JIRA issue and move your issue to the correct status.
+5. Manage the [Evidence of Requirements Implementation](#evidence-of-requirements-implementation) (ERI) according to the guidelines and update the JIRA issue status.
+6. During the [Code Review](#code-review) or **ERI** phases, reviewers could propose changes; and it means possible changes and new commits.
+7. When the [Merge conditions](#Merge-conditions) are fulfilled, you can **merge** the code from the PR following the **squash** strategy and **close the issue** in JIRA.
 
 ## Developing
 
@@ -58,8 +58,8 @@ These are the steps to contribute with a new change to this repository:
 
 A **Pull Request** (PR) is the method of submitting contributions to the project. The project uses [GitHub](https://github.com/) for PR management and can be created from JIRA issues. The PR is a process for peer review by code maintainers and relevant developers involved in the changes. Considerations during the Pull Request creation:
 
-* The **destination branch** of the Pull Request must be `master` branch.
-* The **title** follows the format: [issue-id] type: Title of the issue. (i.e. `[ONL-123] chore: Changing the documentation`) Where the type of the commit follows [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+* The **destination branch** of the Pull Request must be the `master` branch.
+* The **title** follows the format: "[issue-id] type: Title of the issue" (i.e. `[ONL-123] chore: Changing the documentation`). Where the type of the commit follows [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 * Update the **description** to include a descriptive text for changes with notes for the reviewers and screenshots if necessary.
 * The default **reviewers** must be the code owners defined in the [CODEOWNERS](CODEOWNERS) file and you must include also some code owners related with third party services, when these changes affects them. Share the PR in [#online-reviews](https://app.slack.com/client/TFMC43PH7/C0132DEVAPM) Slack channel to be reviewed by Online team members.
 
@@ -71,7 +71,7 @@ There are **QG** automatically controlled by the **Continuous Integration** (CI)
 
 * Enough and appropriate tests coverage.
 * Good documentation for new changes.
-* Follow the [Style guide](#markdown-header-style-guide).
+* Follow the [Style guide](#style-guide).
 
 ### Code Review
 
@@ -95,7 +95,7 @@ There are **QG** automatically controlled by the **Continuous Integration** (CI)
 
 1. Create the ERI video and set the name following the naming: `ERI - <Ticked-id> - <Title of the issue>.extension`.
 2. Upload the video to the appropriate ERI [folder](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/113541346/ERI+Phase#ERIPhase-Saving&StoringtheERIfiles) in Google drive.
-3. Link the ERI video from the field ERI link in the JIRA issue.
+3. Link the ERI video from the field `ERI link` in the JIRA issue.
 4. Create an email following the [ERI Email Template for approvals](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/113541346/ERI+Phase#ERIPhase-ERIEmailTemplateforapprovals) and send to the Product Owner and other related people. Copy to the code owners and related teams in the email.
 5. When the **Product Owner and the related people** reply to the email with the approval, the ERI is approved. These people can ask you before approve the ERI and can be a conversation via email. See more details about the global guidelines in this [document](https://fxsolutions.atlassian.net/wiki/spaces/PRODUCTS/pages/113541346/ERI+Phase).
 
@@ -115,9 +115,9 @@ Before merging a code in a **Pull Request** to the `master` branch, it is requir
 
 When a PR passes all the **Quality Gates** and is merged to the `master` branch, a new version of HUHA is released automatically.
 
-Each time the code is merge into a remote branch the Continuous Integration process at [CircleCI](https://circleci.com/) is launched. This process is a CircleCI workflow called `build-test-publish-release-deploy`. The process can be followed through the corresponding [pipelines page](https://app.circleci.com/pipelines/github/Ebury/huha).
+Each time the code is merge into a remote branch the Continuous Integration process at [CircleCI](https://circleci.com/) is launched. This process consists of a CircleCI's workflow called `build-test-publish-release-deploy`. The process can be followed through its corresponding [pipelines page](https://app.circleci.com/pipelines/github/Ebury/huha).
 
-The workflow's steps that will be executed depend on which branch the code has been merged into. If the code was merged to the development branch the tasks to build the library (`build`) and check the tests (`test`) will be executed. If the code was merge to `master`, in addition to those previously mentioned, the steps that allow publishing the code in the [npm public registry](https://docs.npmjs.com/cli/v6/using-npm/registry) (`publish`), create a new GitHub release (`release`) and finally, deploy to the AWS S3 (`deploy`) will be executed.
+The workflow steps or tasks to be executed depend on which branch the code has been merged into. If the code was merged to the development branch the tasks to build the library (`build`) and check the tests (`test`) will be executed. If the code was merge to `master`, in addition to those previously mentioned, the tasks that allow publishing the code in the [npm public registry](https://docs.npmjs.com/cli/v6/using-npm/registry) (`publish`), create a new GitHub release (`release`) and finally, deploy to our [AWS S3](https://aws.amazon.com/s3/) (`deploy`) will be executed.
 
 ## Reporting a problem or requesting a change
 
@@ -135,9 +135,8 @@ Depending on the kind of reporter, and when it is detected bugs will be reported
 
 ### How to request an enhancement
 
-If you want to request an enhancement of code in this project, you must create a new task in your board with the task type **Task**, filling the `Components` field with `Huha`, and communicate it to the code owners. The enhancement should be aligned with the [VISION](VISION.md) of the project. If you want to implement the enhancement, follow the [Submitting changes](#markdown-header-submitting-changes) guide to contribute. Thank you for your contributions!
+If you want to request an enhancement of code in this project, you must create a new task in your board with the task type **Task**, filling the `Components` field with `Huha`, and communicate it to the code owners. The enhancement should be aligned with the [VISION](VISION.md) of the project. If you want to implement the enhancement, follow the [Submitting changes](#submitting-changes) guide to contribute. Thank you for your contributions!
 
-## Thanks!
+## Thanks
 
 Thanks! Contributing to HUHA should be easy. If you find any of this hard to figure out, let us know so we can improve our process or documentation!
-README.md
