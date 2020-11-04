@@ -6,11 +6,11 @@ HUHA is a JavaScript library that helps measure the usability and user experienc
 
 1. [Vision](VISION.md)
 1. [Code Owners](CODEOWNERS)
+1. [Contributing](CONTRIBUTING.md)
 1. [Installation](#installation)
 1. [Usage](#usage)
 1. [Prerequisites](#prerequisites)
-1. [Contributing](#contributing)
-1. [References](#references)
+1. [Reference](REFERENCE.md)
 
 ## Installation
 
@@ -42,7 +42,7 @@ Alternatively, you can load the script directly from our `cdn`, specifying the d
 <script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/3.0.0/huha.js"></script>
 ```
 
-#### `Huha` class ####
+### `Huha` class
 
 Method | Description |
 ------------- | ------------- |
@@ -53,7 +53,7 @@ Method | Description |
 
 (*) The event is tracked in Google Analytics or Segment based on the `Huha` options.
 
-#### `HuhaTask` class ####
+### `HuhaTask` class
 
 Method | Description |
 ------------- | ------------- |
@@ -89,7 +89,7 @@ const huhaEvent = huha.createEvent({
 });
 ```
 
-### Automatic tasks ###
+### Automatic tasks
 It is possible to create tasks and measuring the user activity directly in the DOM without writing Javascript.
 
 Any user activity done in DOM elements having the `data-huha-task` attribute will be monitored using the following
@@ -118,31 +118,3 @@ Example:
 ## Prerequisites
 
 For the correct registration of the information in the tracking tools it is required that the set-up scripts of those tools to be used have been executed, which will define the necessary global variables. For instance, if the option `trackOnSegment` is set to `true`, HUHA expects to find the Segment corresponding global variable,  [analytics](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/), filled in.
-
-## Contributing
-
-We love collaborating with other teams and welcome contributions!
-
-See the [contributing](CONTRIBUTING.md) docs for more info on code style, linting, and testing. Or if you want to report a problem or request some change.
-
-## References
-
-### Development
-
-[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-
-### Testing
-
-[Jest](https://jestjs.io/)
-
-### Package management
-
-[npm](https://www.npmjs.com/)
-
-### Tools to collect customers data
-
-[Google Analytics](https://analytics.google.com/analytics/web/)
-
-[Intercom](https://www.intercom.com/)
-
-[Segment](https://segment.com/).
