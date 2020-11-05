@@ -110,6 +110,7 @@ Before merging a code in a **Pull Request** to the `master` branch, it is requir
 * The branch must be **updated** with the latest commit of `master` branch.
 * The required fields in the issue are **filled**.
 * The package.json version must be bumped following the [Semver](https://semver.org/) convention.
+* The [CHANGELOG](CHANGELOG.md) must be updated with relevant information about the changes that have been made.
 
 ## Release
 
