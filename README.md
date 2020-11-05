@@ -9,6 +9,7 @@ HUHA is a JavaScript library that helps measure the usability and user experienc
 1. [Contributing](CONTRIBUTING.md)
 1. [Installation](#installation)
 1. [Usage](#usage)
+1. [Prerequisites](#prerequisites)
 1. [References](#references)
 
 ## Installation
@@ -23,9 +24,31 @@ npm install
 
 ## Usage
 
+If you want to use the library in your project then you will have to install it (via [npm](https://www.npmjs.com/package/@ebury/huha)) as a dependency:
+
+```sh
+npm install github:Ebury/huha --save
+```
+
+And then you can import the `Huha` class in your application:
+
+```javascript
+import Huha from '@ebury/huha'
+```
+
+Alternatively, you can load the script directly from our `cdn`, specifying the desired version:
+
+```html
+<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/3.0.0/huha.js"></script>
+```
+
 ### API Reference
 
 You can visit [Reference](REFERENCE.md) to check the reference.
+
+## Prerequisites
+
+For the correct registration of the information in the tracking tools it is required that the set-up scripts of those tools to be used have been executed, which will define the necessary global variables. For instance, if the option `trackOnSegment` is set to `true`, HUHA expects to find the Segment corresponding global variable,  [analytics](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/), filled in.
 
 ## References
 

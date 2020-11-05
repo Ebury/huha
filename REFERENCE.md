@@ -1,26 +1,6 @@
 # Reference
 
-## Usage
-
-If you want to use the library in your project then you will have to install it (via [npm](https://www.npmjs.com/package/@ebury/huha)) as a dependency:
-
-```sh
-npm install github:Ebury/huha --save
-```
-
-And then you can import the `Huha` class in your application:
-
-```javascript
-import Huha from '@ebury/huha'
-```
-
-Alternatively, you can load the script directly from our `cdn`, specifying the desired version:
-
-```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/3.0.0/huha.js"></script>
-```
-
-### `Huha` class
+## `Huha` class
 
 Method | Description |
 ------------- | ------------- |
@@ -31,7 +11,7 @@ Method | Description |
 
 (*) The event is tracked in Google Analytics or Segment based on the `Huha` options.
 
-### `HuhaTask` class
+## `HuhaTask` class
 
 Method | Description |
 ------------- | ------------- |
@@ -67,7 +47,7 @@ const huhaEvent = huha.createEvent({
 });
 ```
 
-### Automatic tasks
+## Automatic tasks
 
 It is possible to create tasks and measuring the user activity directly in the DOM without writing Javascript.
 
@@ -93,7 +73,3 @@ Example:
 <button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="abandon">Abandon</button>
 <button type="button" data-huha-task="TaskName" data-huha-trigger="click" data-huha-event="complete">Complete</button>
 ```
-
-## Prerequisites
-
-For the correct registration of the information in the tracking tools it is required that the set-up scripts of those tools to be used have been executed, which will define the necessary global variables. For instance, if the option `trackOnSegment` is set to `true`, HUHA expects to find the Segment corresponding global variable,  [analytics](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/), filled in.
