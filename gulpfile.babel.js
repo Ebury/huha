@@ -40,7 +40,6 @@ const build = () => {
     .pipe($.sourcemaps.init({ loadMaps: true }))
     .pipe($.uglify())
     .pipe($.sourcemaps.write('./'))
-    .pipe($.size({ title: 'build', gzip: true }))
     .pipe(dest(buildFolder))
     .pipe(dest(versionedBuildFolder))
     .pipe(dest(devBuildFolder));
