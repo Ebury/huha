@@ -33,7 +33,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.7.0",
     "gulp": "^4.0.2",
-    "gulp-awspublish": "^3.3.3",
+    "gulp-awspublish": "4.1.2",
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-size": "3.0.0",
