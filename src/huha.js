@@ -1,5 +1,8 @@
 /* global ga, Intercom, gtag, analytics, localStorage */
 
+// TODO: Remove after addressing the story ONL-5293
+/* eslint max-classes-per-file: ["error", 3] */
+
 import uuidv1 from 'uuid/v1';
 
 const { document } = global;
@@ -407,7 +410,7 @@ class Huha {
    * @returns {HuhaTask}
    */
   getTask(name) {
-    let searchTask = this.tasks.find(task => task.name === name && task.status === IN_PROGRESS);
+    let searchTask = this.tasks.find((task) => task.name === name && task.status === IN_PROGRESS);
     if (!searchTask) {
       searchTask = JSON.parse(localStorage.getItem(name)) || undefined;
       if (searchTask) {
@@ -480,7 +483,7 @@ class Huha {
    * Abandons all the tasks that are in progress
    */
   abandonInProgressTasks() {
-    const pendingTasks = this.tasks.filter(task => task.status === IN_PROGRESS);
+    const pendingTasks = this.tasks.filter((task) => task.status === IN_PROGRESS);
     pendingTasks.forEach((task) => {
       if (!task.persistent) {
         task.abandon();
