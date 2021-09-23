@@ -492,6 +492,5 @@ class Huha {
   }
 }
 
-module.exports = Huha;
-module.exports.HuhaTask = HuhaTask;
-module.exports.HuhaEvent = HuhaEvent;
+export default Huha;
+export { HuhaTask, HuhaEvent };
