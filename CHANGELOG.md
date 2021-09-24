@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2021-09-24
+
+- Updating CODEOWNERS.
+- Fix mixed import/exports in `huha.js`.
+- Add module entry point.
+
 ## [3.3.1] - 2020-12-23
 ### Changed
 - Bump babel-jest from 25.0.0 to 26.6.3
