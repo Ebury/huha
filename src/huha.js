@@ -294,6 +294,7 @@ class HuhaEvent {
         value: this.value,
       });
     } else if (typeof ga !== 'undefined') {
+      //ignoring the "value" as it needs to be an int for the event to fire, currently we are sending str 
       ga('send', 'event', this.category, this.action, this.object);
     }
   }
