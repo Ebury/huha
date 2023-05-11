@@ -27,19 +27,13 @@ npm install
 If you want to use the library in your project then you will have to install it (via [npm](https://www.npmjs.com/package/@ebury/huha)) as a dependency:
 
 ```sh
-npm install github:Ebury/huha --save
+npm install @ebury/huha --save
 ```
 
 And then you can import the `Huha` class in your application:
 
 ```javascript
 import Huha from '@ebury/huha'
-```
-
-Alternatively, you can load the script directly from our `cdn`, specifying the desired version:
-
-```html
-<script type="text/javascript" src="https://ebury-huha.s3.amazonaws.com/3.0.0/huha.js"></script>
 ```
 
 ### API Reference
@@ -62,4 +56,4 @@ For the correct registration of the information in the tracking tools it is requ
 
 [Intercom](https://www.intercom.com/)
 
-[Segment](https://segment.com/).
+[Segment](https://segment.com/)

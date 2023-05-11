@@ -26,7 +26,7 @@ These are the steps to contribute with a new change to this repository:
 4. When your change is ready to be reviewed, create a [Pull Request](#creating-a-pr) (PR) from the JIRA issue and move your issue to the correct status.
 5. Manage the [Evidence of Requirements Implementation](#evidence-of-requirements-implementation) (ERI) according to the guidelines and update the JIRA issue status.
 6. During the [Code Review](#code-review) or **ERI** phases, reviewers could propose changes; and it means possible changes and new commits.
-7. When the [Merge conditions](#Merge-conditions) are fulfilled, you can **merge** the code from the PR following the **squash** strategy and **close the issue** in JIRA.
+7. When the [Merge conditions](#merge-conditions) are fulfilled, you can **merge** the code from the PR following the **squash** strategy and **close the issue** in JIRA.
 
 ## Developing
 
@@ -38,7 +38,7 @@ This project has been developed using plain JavaScript. It is not using any libr
 
 We use the eslint plugin to lint our JavaScript code. To check your work before pushing, run:
 
-```
+```sh
 npm run lint
 ```
 
@@ -46,7 +46,7 @@ npm run lint
 
 Tests can be launched running the following commands in the terminal, they will launch unit tests with Jest.
 
-```
+```sh
 npm run test
 ```
 
@@ -67,7 +67,7 @@ A **Pull Request** (PR) is the method of submitting contributions to the project
 
 After developing the changes and submitting a **Pull Request** there are a series of Quality Gates and approvals needed in order to merge the code to the `master` branch for releasing a new version.
 
-There are **QG** automatically controlled by the **Continuous Integration** (CI) process at [CircleCI](https://circleci.com/), during the workflow's steps execution, and there are other **QG** that must be checked manually by the code owners. The manual **QG** to check are:
+There are **QG** automatically controlled by the **Continuous Integration** (CI) process at [GH Actions](https://github.com/Ebury/huha/actions/), during the workflow's steps execution, and there are other **QG** that must be checked manually by the code owners. The manual **QG** to check are:
 
 * Enough and appropriate tests coverage.
 * Good documentation for new changes.
@@ -114,11 +114,13 @@ Before merging a code in a **Pull Request** to the `master` branch, it is requir
 
 ## Release
 
-When a PR passes all the **Quality Gates** and is merged to the `master` branch, a new version of HUHA is released automatically.
+When a PR passes all the **Quality Gates** and is merged to the `master` branch, a new version of HUHA must be released manually.
 
-Each time the code is merge into a remote branch the Continuous Integration process at [CircleCI](https://circleci.com/) is launched. This process consists of a CircleCI's workflow called `build-test-publish-release-deploy`. The process can be followed through its corresponding [pipelines page](https://app.circleci.com/pipelines/github/Ebury/huha).
+```sh
+npm run build
 
-The workflow steps or tasks to be executed depend on which branch the code has been merged into. If the code was merged to the development branch the tasks to build the library (`build`) and check the tests (`test`) will be executed. If the code was merge to `master`, in addition to those previously mentioned, the tasks that allow publishing the code in the [npm public registry](https://docs.npmjs.com/cli/v6/using-npm/registry) (`publish`), create a new GitHub release (`release`) and finally, deploy to our [AWS S3](https://aws.amazon.com/s3/) (`deploy`) will be executed.
+npm publish
+```
 
 ## Reporting a problem or requesting a change
 
