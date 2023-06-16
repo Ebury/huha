@@ -285,9 +285,10 @@ class HuhaEvent {
   sendToGoogleAnalytics() {
     if (typeof gtag !== 'undefined') {
       gtag('event', this.action, {
+      // ignoring the "value" as it needs to be an int for the event to fire,
+      // currently we are sending str
         event_category: this.category,
         event_label: this.object,
-        value: this.value,
       });
     }
   }
