@@ -1,4 +1,4 @@
-/* global ga, Intercom, gtag, analytics, localStorage */
+/* global Intercom, gtag, analytics, localStorage */
 
 // TODO: Remove after addressing the story ONL-5293
 /* eslint max-classes-per-file: ["error", 3] */
@@ -160,10 +160,6 @@ class HuhaTask {
         event_label: 'Effort',
         value: this.effort,
       });
-    } else if (typeof ga !== 'undefined') {
-      ga('send', 'timing', this.name, this.status, this.time, 'Time on task');
-      ga('send', 'event', this.name, this.status, 'Error', this.errors);
-      ga('send', 'event', this.name, this.status, 'Effort', this.effort);
     }
   }
 
@@ -293,10 +289,6 @@ class HuhaEvent {
         event_label: this.object,
         value: this.value,
       });
-    } else if (typeof ga !== 'undefined') {
-      // ignoring the "value" as it needs to be an int for the event to fire, 
-      // currently we are sending str 
-      ga('send', 'event', this.category, this.action, this.object);
     }
   }
 
