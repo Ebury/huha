@@ -6,7 +6,7 @@
   "author": "Ebury Team (http://labs.ebury.rocks/)",
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "lint": "gulp lint",
@@ -55,6 +55,7 @@
   },
   "main": "dist/huha.js",
   "module": "src/huha.js",
+  "types": "index.d.ts",
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/"
