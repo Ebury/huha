@@ -86,7 +86,7 @@ export class HuhaEvent implements HuhaOptions {
   sendToSegment(): void;
 }
 
-export class Huha implements HuhaOptions {
+export default class Huha implements HuhaOptions {
   tasks: HuhaTask[];
   events: HuhaEvent[];
 
