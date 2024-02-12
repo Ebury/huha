@@ -1,12 +1,12 @@
 {
   "name": "@ebury/huha",
   "description": "huha.js (Hyperactive Users Hint Analysis) is a JavaScript framework that measures the usability and user experience in an automated way, including the limitations of the model and the best practices.",
-  "version": "3.4.3",
+  "version": "3.5.0",
   "repository": "github:Ebury/huha",
   "author": "Ebury Team (http://labs.ebury.rocks/)",
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "lint": "gulp lint",
@@ -55,6 +55,7 @@
   },
   "main": "dist/huha.js",
   "module": "src/huha.js",
+  "types": "index.d.ts",
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/"
