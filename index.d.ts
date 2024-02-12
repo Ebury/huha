@@ -14,7 +14,7 @@ export interface HuhaTaskProps {
   name: string,
   label?: string,
   category?: string,
-  value?: string,
+  value?: string | number,
   parentTask?: HuhaTask | null,
   execId?: string,
   persistent?: boolean,
@@ -24,7 +24,7 @@ export class HuhaTask implements HuhaOptions {
   name: string;
   label?: string;
   category?: string;
-  value?: string;
+  value?: string | number;
   status: HuhaTaskStatus;
   effort: number;
   errors: number;
@@ -62,7 +62,7 @@ export interface HuhaEventProps {
   object?: string,
   action?: string,
   category?: string,
-  value?: string,
+  value?: string | number,
   task?: string | HuhaTask | null,
   eventGroup?: string,
 }
@@ -72,7 +72,7 @@ export class HuhaEvent implements HuhaOptions {
   object?: string;
   action?: string;
   category?: string;
-  value?: string;
+  value?: string | number;
   task?: string | HuhaTask | null;
   eventGroup?: string;
   trackOnGoogleAnalytics?: boolean;
